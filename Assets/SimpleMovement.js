@@ -14,8 +14,9 @@ function Update () {
 	var move = Input.GetAxis("Horizontal");
 	
 	// If upside down, stop
-	if(!(transform.eulerAngles.z < 90 || transform.eulerAngles.z > 270))
+	if(!(transform.eulerAngles.z < 90 || transform.eulerAngles.z > 270)){
 		return 0;
+	}
 		
 	// Flip
 	if((move > 0 && facingRight) || (move < 0 && !facingRight)) 

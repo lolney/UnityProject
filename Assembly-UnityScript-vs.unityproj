@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\SimpleMovement.js" />
      <Compile Include="Assets\ThirdPerson.js" />
+     <Compile Include="Assets\UpdateText.js" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>/Users/Luke/UnityProject/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
