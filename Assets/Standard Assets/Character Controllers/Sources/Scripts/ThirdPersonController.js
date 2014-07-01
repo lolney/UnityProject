@@ -178,7 +178,7 @@ function UpdateSmoothedMovementDirection ()
 				
 				moveDirection = moveDirection.normalized;
 			}
-		}
+		} 
 		
 		// Smooth the speed based on the current target direction
 		var curSmooth = speedSmoothing * Time.deltaTime;
