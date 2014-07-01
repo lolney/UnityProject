@@ -1,10 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SimpleMovement.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UpdateText.js">
     <Files>
       <File FileName="Assets/ThirdPerson.js" Line="8" Column="42" />
       <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/ThirdPersonController.js" Line="318" Column="45" />
       <File FileName="Assets/SimpleMovement.js" Line="26" Column="20" />
+      <File FileName="Assets/UpdateText.js" Line="8" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

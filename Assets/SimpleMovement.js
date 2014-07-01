@@ -30,6 +30,8 @@ function Update () {
 	if(Input.GetKey (KeyCode.Space) && rigidbody2D.velocity.y < .01 && rigidbody2D.velocity.y > -.01)
 		rigidbody2D.velocity += Vector2(0, JumpPower);
 		
+	return 0;
+		
 }
 
 function flip() {
