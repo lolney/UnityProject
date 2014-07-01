@@ -2,7 +2,7 @@
 
 import System.Collections.Generic;
 
-private var gridSize = 5;
+private var gridSize = 25;
 
 public var Player : Transform;
 public var blockPrefabs : GameObject[];
@@ -30,12 +30,16 @@ function createSprites(maze : List.<Vector2>[,]) {
 			for(var k = 0; k < maze[i,j].Count; k++) {
 	            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 	            //cube.AddComponent(Rigidbody2D);
-	            if((i - maze[i,j][k].x) == 0)
-	            	cube.transform.localScale = Vector3(1,4,1);
-            	else
-	            	cube.transform.localScale = Vector3(4,1,1);
+	            cube.transform.position = pos + Vector3 (i * 5, j * 5, 0);
 	            
-	            cube.transform.position = pos + Vector3 (maze[i,j][k].x * 5, maze[i,j][k].y * 5, 0);
+	            if((i - maze[i,j][k].x) == 0){
+	            	cube.transform.localScale = Vector3(1,5,1);
+	            	cube.transform.position += Vector3 (0, 2.5, 0);
+            	}
+            	else {
+	            	cube.transform.localScale = Vector3(5,1,1);
+	            	cube.transform.position += Vector3 (2.5, 0, 0);
+            	}
 	            print(maze[i,j][k].x + " " + maze[i,j][k].y);
      		}
      }
