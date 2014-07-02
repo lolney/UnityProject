@@ -24,12 +24,12 @@ function Start () {
 function createSprites(maze : List.<Vector2>[,]) {
 
 	var pos = Player.position;
-	for (var i = 0; i < gridSize; i++)
+for (var i = 0; i < gridSize; i++)
 		for (var j = 0; j < gridSize; j++){
 			print("For " + i + j);
 			for(var k = 0; k < maze[i,j].Count; k++) {
 	            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-	            //cube.AddComponent(Rigidbody2D);
+	            //cube.AddComponent(Rigidbody);
 	            cube.transform.position = pos + Vector3 (i * 5, j * 5, 0);
 	            
 	            if((i - maze[i,j][k].x) == 0){
@@ -102,10 +102,6 @@ function adjacent (i:int, j:int) :  List.<Vector2> {
 			
 	return result;
 		
-}
-
-function addAdjacent() {
-
 }
 
 private class BHeap {
