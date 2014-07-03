@@ -28,19 +28,15 @@ for (var i = 0; i < gridSize; i++)
 		for (var j = 0; j < gridSize; j++){
 			print("For " + i + j);
 			for(var k = 0; k < maze[i,j].Count; k++) {
-	            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-	            //cube.AddComponent(Rigidbody);
-	            cube.transform.position = pos + Vector3 (i * 5, j * 5, 0);
-	            
-	            if((i - maze[i,j][k].x) == 0){
-	            	cube.transform.localScale = Vector3(1,5,1);
-	            	cube.transform.position += Vector3 (0, 2.5, 0);
-            	}
-            	else {
-	            	cube.transform.localScale = Vector3(5,1,1);
-	            	cube.transform.position += Vector3 (2.5, 0, 0);
-            	}
-	            print(maze[i,j][k].x + " " + maze[i,j][k].y);
+			
+				var rotation : Quaternion;
+				
+				if((i - maze[i,j][k].x) == 0)
+					rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI / 2);
+				if((j - maze[i,j][k].y) == 0)
+					rotation = Quaternion.identity;
+				
+				var block = Instantiate(blockPrefabs[0], pos + Vector3 (i * 10, j * 10, 0), rotation);
      		}
      }
      
