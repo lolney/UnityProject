@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 401b9ec21fe7d4eb385d379c431ea03c
+ShaderImporter:
+  defaultTextures:
+  - _FrontTex: {fileID: 2800000, guid: de945dd0f8ddf4c889b2fd70c9fb0b20, type: 3}
+  - _BackTex: {fileID: 2800000, guid: 0ae102cd95f7c4232b8dff6bde815714, type: 3}
+  - _LeftTex: {instanceID: 0}
+  - _RightTex: {instanceID: 0}
+  - _UpTex: {instanceID: 0}
+  - _DownTex: {instanceID: 0}
+  - _FrontTex2: {instanceID: 0}
+  - _BackTex2: {instanceID: 0}
+  - _LeftTex2: {instanceID: 0}
+  - _RightTex2: {instanceID: 0}
+  - _UpTex2: {instanceID: 0}
+  - _DownTex2: {instanceID: 0}
+  userData: 

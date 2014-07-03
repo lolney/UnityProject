@@ -47,10 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AudioPlayRandom.js" />
+     <Compile Include="Assets\BlendMaterials.js" />
      <Compile Include="Assets\MazeGeneration.js" />
      <Compile Include="Assets\SimpleMovement.js" />
      <Compile Include="Assets\ThirdPerson.js" />
      <Compile Include="Assets\UpdateText.js" />
+     <None Include="Assets\NewShader.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

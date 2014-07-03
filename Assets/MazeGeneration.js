@@ -2,7 +2,7 @@
 
 import System.Collections.Generic;
 
-private var gridSize = 20;
+public var gridSize = 20;
 
 public var Player : Transform;
 public var blockPrefabs : GameObject[];
@@ -40,12 +40,19 @@ for (var i = 0; i < gridSize; i++)
 						rotation = Quaternion.AxisAngle(Vector3(0,0,1), 3 * Mathf.PI / 2);
 				}
 				if((j - maze[i,j][k].y) == 0){	// Horizontal bar
-					if(maze[i,j][k].x > i)
+					if(maze[i,j][k].x > i)	// Adjacent vertex to the right
 						 rotation = Quaternion.identity;
 					 else
 					 	rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI);
 				}
+				
 				var block = Instantiate(blockPrefabs[0], pos + Vector3 (i * 10, j * 10, 0), rotation);
+				
+				// Change colors as you go up
+				var sprite : SpriteRenderer = block.GetComponent(SpriteRenderer);
+				sprite.material.color.r = 1 - ((j + .01) / gridSize);
+				sprite.material.color.g = 1 - ((j + .01) / gridSize);
+				
      		}
      }
      
