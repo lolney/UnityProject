@@ -51,7 +51,7 @@
      <Compile Include="Assets\ThirdPerson.js" />
      <Compile Include="Assets\UpdateText.js" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>/Users/eolneybell/UnityProject/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>/Users/Luke/UnityProject/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
