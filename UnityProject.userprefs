@@ -1,12 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MazeGeneration.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UpdateText.js">
     <Files>
-      <File FileName="Assets/MazeGeneration.js" Line="27" Column="15" />
-      <File FileName="Assets/ThirdPerson.js" Line="3" Column="12" />
+      <File FileName="Assets/MazeGeneration.js" Line="106" Column="1" />
+      <File FileName="Assets/ThirdPerson.js" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/ThirdPersonController.js" Line="1" Column="1" />
-      <File FileName="Assets/SimpleMovement.js" Line="1" Column="1" />
-      <File FileName="Assets/UpdateText.js" Line="8" Column="2" />
+      <File FileName="Assets/SimpleMovement.js" Line="17" Column="66" />
+      <File FileName="Assets/UpdateText.js" Line="6" Column="61" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
