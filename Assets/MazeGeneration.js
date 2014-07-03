@@ -2,7 +2,7 @@
 
 import System.Collections.Generic;
 
-private var gridSize = 25;
+private var gridSize = 20;
 
 public var Player : Transform;
 public var blockPrefabs : GameObject[];
@@ -16,6 +16,8 @@ function Start () {
 			grid[i, j] = Random.Range(0,100);
 	
 	var maze = Prim (grid);
+	// Remove upper right piece
+	maze[gridSize - 2, gridSize - 1].RemoveRange(0, 1);
 	
 	createSprites(maze);
 	
@@ -31,11 +33,18 @@ for (var i = 0; i < gridSize; i++)
 			
 				var rotation : Quaternion;
 				
-				if((i - maze[i,j][k].x) == 0)
-					rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI / 2);
-				if((j - maze[i,j][k].y) == 0)
-					rotation = Quaternion.identity;
-				
+				if((i - maze[i,j][k].x) == 0){	// Vertical bar
+					if(maze[i,j][k].y > j)	// Adjacent vertex is above
+						rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI / 2);
+					else
+						rotation = Quaternion.AxisAngle(Vector3(0,0,1), 3 * Mathf.PI / 2);
+				}
+				if((j - maze[i,j][k].y) == 0){	// Horizontal bar
+					if(maze[i,j][k].x > i)
+						 rotation = Quaternion.identity;
+					 else
+					 	rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI);
+				}
 				var block = Instantiate(blockPrefabs[0], pos + Vector3 (i * 10, j * 10, 0), rotation);
      		}
      }
@@ -50,17 +59,20 @@ function Prim (grid : int[,]) : List.<Vector2>[,] {
 			VNew[i, j] = null;
 			
 	var minHeap = BHeap();
+	fillInEdges(VNew, minHeap, grid);
 	
-	// Initialize at 0,0
-	VNew[0, 0] = new List.<Vector2>();
-	addAdjacents(minHeap, grid, 0, 0);
+	// Initialize at center
+	var index : int = gridSize / 2;
+	VNew[index, index] = new List.<Vector2>();
+	addAdjacents(minHeap, grid, index, index);
 	
 	
 	
 	while(!minHeap.isEmpty()) { // heap is not empty)	
 		// Take from heap, add to tree
 		do {
-			if(minHeap.isEmpty()) return VNew;
+			if(minHeap.isEmpty()) 
+				return VNew;
 			var edge = minHeap.remove();
 		}
 		while(VNew[edge.b.x, edge.b.y] != null); // vertex not yet in list
@@ -74,6 +86,39 @@ function Prim (grid : int[,]) : List.<Vector2>[,] {
 	}
 	
 	return VNew;
+}
+
+function fillInEdges(VNew : List.<Vector2>[,], minHeap : BHeap, grid : int[,]) {
+	// Fill in the left and top sides
+	for(var i=0; i<gridSize - 1; i++){
+	
+		var list = new List.<Vector2>();
+		list.Add(Vector2(0, i+1));
+		VNew[0, i] = list;
+		minHeap.insert(AdjacencyObject(Vector2(0,i), Vector2(1,i), grid[1, i]));
+		
+		list = new List.<Vector2>();
+		list.Add(Vector2(i+1, gridSize - 1));
+		VNew[i, gridSize - 1] = list;
+		minHeap.insert(AdjacencyObject(Vector2(i, gridSize - 1), Vector2(i, gridSize - 2), grid[i, gridSize - 2]));	
+	}
+	// Fill in the right and bottom sides
+	for(i=gridSize-1; i > 0; i--){
+	
+		list = new List.<Vector2>();
+		list.Add(Vector2(gridSize - 1, i-1));
+		VNew[gridSize - 1, i] = list;
+		minHeap.insert(AdjacencyObject(Vector2(gridSize - 1, i), Vector2(gridSize - 2, i), grid[gridSize - 2, i]));
+		
+		
+		list = new List.<Vector2>();
+		if(i != 1)
+			list.Add(Vector2(i-1, 0));
+		VNew[i, 0] = list;	
+		minHeap.insert(AdjacencyObject(Vector2(i,0), Vector2(i,1), grid[i, 1]));
+			
+	}
+		
 }
 
 function addAdjacents(minHeap : BHeap, grid : int[,], i : int, j : int) {
@@ -95,6 +140,10 @@ function adjacent (i:int, j:int) :  List.<Vector2> {
 		result.Add(Vector2(i + 1, j));
 	if(j + 1 < gridSize)
 		result.Add(Vector2(i, j + 1));
+	if(i - 1 >= 0)
+		result.Add(Vector2(i - 1, j));
+	if(j - 1 >= 0)
+		result.Add(Vector2(i, j - 1));
 			
 	return result;
 		
