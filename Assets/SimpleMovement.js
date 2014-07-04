@@ -11,10 +11,8 @@ public var JumpPower = 10.0;
 
 function Start () {
 	character = GameObject.Find("Main Character");
-	anim = character.GetComponent(Animator);
-	anim.enabled = false;
 	
-	controller = new SimpleMovementController(transform, rigidbody2D, anim, Speed, JumpPower);
+	controller = new SimpleMovementController(gameObject, Speed, JumpPower);
 
 }
 

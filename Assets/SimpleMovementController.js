@@ -27,11 +27,12 @@ public class SimpleMovementController {
 		}
 	};
 
-	function SimpleMovementController(transform : Transform, rigidbody2D : Rigidbody2D, anim : Animator, Speed : float, JumpPower : float) {
-		this.transform = transform;
-		this.rigidbody2D = rigidbody2D;
+	function SimpleMovementController(gameobject : GameObject, Speed : float, JumpPower : float) {
+		this.transform = gameobject.transform;
+		this.rigidbody2D = gameobject.rigidbody2D;
 		
-		this.anim = anim;
+		anim = gameobject.GetComponent(Animator);
+		anim.enabled = false;
 		
 		this.Speed = Speed;
 		this.JumpPower = JumpPower;

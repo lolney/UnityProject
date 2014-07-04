@@ -2,7 +2,7 @@
 
 import System.Collections.Generic;
 
-public var gridSize = 20;
+public var gridSize = 21;
 
 public var Player : Transform;
 public var blockPrefabs : GameObject[];
@@ -26,35 +26,36 @@ function Start () {
 function createSprites(maze : List.<Vector2>[,]) {
 
 	var pos = Player.position;
-for (var i = 0; i < gridSize; i++)
-		for (var j = 0; j < gridSize; j++){
-			print("For " + i + j);
-			for(var k = 0; k < maze[i,j].Count; k++) {
-			
-				var rotation : Quaternion;
+	for(var a = 0; a < 3; a++)
+		for (var j = 0; j < (a + 1) * 7; j++)
+			for (var i = 0; i < gridSize; i++)			
+				for(var k = 0; k < maze[i,j].Count; k++) {
 				
-				if((i - maze[i,j][k].x) == 0){	// Vertical bar
-					if(maze[i,j][k].y > j)	// Adjacent vertex is above
-						rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI / 2);
-					else
-						rotation = Quaternion.AxisAngle(Vector3(0,0,1), 3 * Mathf.PI / 2);
-				}
-				if((j - maze[i,j][k].y) == 0){	// Horizontal bar
-					if(maze[i,j][k].x > i)	// Adjacent vertex to the right
-						 rotation = Quaternion.identity;
-					 else
-					 	rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI);
-				}
-				
-				var block = Instantiate(blockPrefabs[0], pos + Vector3 (i * 10, j * 10, 0), rotation);
-				
-				// Change colors as you go up
-				var sprite : SpriteRenderer = block.GetComponent(SpriteRenderer);
-				sprite.material.color.r = 1 - ((j + .01) / gridSize);
-				sprite.material.color.g = 1 - ((j + .01) / gridSize);
-				
-     		}
-     }
+					var rotation : Quaternion; 
+	
+					if((i - maze[i,j][k].x) == 0){	// Vertical bar
+						if(maze[i,j][k].y > j)	// Adjacent vertex is above
+							rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI / 2);
+						else
+							rotation = Quaternion.AxisAngle(Vector3(0,0,1), 3 * Mathf.PI / 2);
+					}
+					if((j - maze[i,j][k].y) == 0){	// Horizontal bar
+						if(maze[i,j][k].x > i)	// Adjacent vertex to the right
+							 rotation = Quaternion.identity;
+						 else
+						 	rotation = Quaternion.AxisAngle(Vector3(0,0,1), Mathf.PI);
+					}
+								
+					var block = Instantiate(blockPrefabs[a], pos + Vector3 (i * 10, j * 10, 0), rotation);
+					
+					// Change colors as you go up
+					/*
+					var sprite : SpriteRenderer = block.GetComponent(SpriteRenderer);
+					sprite.material.color.r = 1 - ((j + .01) / gridSize);
+					sprite.material.color.g = 1 - ((j + .01) / gridSize);*/
+					
+	     		}
+     	
      
 }
 

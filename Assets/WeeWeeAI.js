@@ -11,10 +11,8 @@ public var JumpPower = 30.0;
 
 function Start () {
 	current = state.idle;
-	var anim = GetComponent(Animator);
-	anim.enabled = false;
 	
-	controller = new SimpleMovementController(transform, rigidbody2D, anim, Speed, JumpPower);
+	controller = new SimpleMovementController(gameObject, Speed, JumpPower);
 
 }
 
@@ -29,23 +27,23 @@ function Update () {
 
 	switch(rand) {
 		case 0:
-			print("Switched state to idle");
+			print(gameObject + " Switched state to idle");
 			current = state.idle;
 			break;
 		case 1:
-			print("Switched state to left");
+			print(gameObject + " Switched state to left");
 			current = state.left;
 			break;
 		case 2:
-			print("Switched state to right");
+			print(gameObject + " Switched state to right");
 			current = state.right;
 			break;
 		case 3:
-			print("Switched state to jump");
+			print(gameObject + " Switched state to jump");
 			controller.jump();
 			break;
 		case 4:
-			print("Switched state to fly");
+			print(gameObject + " Switched state to fly");
 			current = state.fly;
 			break;
 	}
