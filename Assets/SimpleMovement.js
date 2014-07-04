@@ -34,6 +34,7 @@ function OnCollisionEnter2D(collision : Collision2D) {
 function Update () {
 
 	var axis = Input.GetAxis("Horizontal");
+	var axisUp = Input.GetAxis("Vertical");
 	
 	// If upside down, stop
 /*	if(transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270){
@@ -49,7 +50,7 @@ function Update () {
 	}
 	
 	if(Input.GetAxis("Vertical") > 0) {
-		fly();
+		fly(axisUp);
 	}
 	
 	return 0;
@@ -66,9 +67,9 @@ function move(movementAxis : float) {
 		rigidbody2D.velocity = Vector2(move * Speed, JumpPower/2.0);
 	}*/
 }
-function fly() {
+function fly(movementAxis : float) {
 	if(rigidbody2D.velocity.y < JumpPower * 2)
-		 rigidbody2D.velocity += JumpPower * transform.up / 10;
+		 rigidbody2D.velocity += JumpPower * movementAxis * transform.up / 10;
 	anim.Play("Flying", 0);
 	colBelow = false;
 	anim.enabled = true;
