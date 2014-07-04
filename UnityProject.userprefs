@@ -1,12 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/WeeWeeAI.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MazeGeneration.cs">
     <Files>
-      <File FileName="Assets/NewShader.shader" Line="11" Column="15" />
-      <File FileName="Assets/AudioPlayRandom.js" Line="1" Column="1" />
-      <File FileName="Assets/WeeWeeAI.js" Line="4" Column="1" />
-      <File FileName="Assets/SimpleMovement.js" Line="4" Column="1" />
-      <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/PlatformInputController.js" Line="41" Column="46" />
+      <File FileName="Assets/WeeWeeAI.cs" Line="1" Column="1" />
+      <File FileName="Assets/ThirdPerson.js" Line="1" Column="1" />
+      <File FileName="Assets/SimpleMovementController.cs" Line="1" Column="1" />
+      <File FileName="Assets/SimpleMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets/MazeGeneration.cs" Line="40" Column="35" />
+      <File FileName="Assets/BlendMaterials.cs" Line="19" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -46,8 +46,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Shader Property Changer\ShaderPropertyChangerGroup.cs" />
-     <Compile Include="Assets\Shader Property Changer\ShaderPropertyChangerSingle.cs" />
+     <Compile Include="Assets\AudioPlayRandom.cs" />
+     <Compile Include="Assets\BlendMaterials.cs" />
+     <Compile Include="Assets\MazeGeneration.cs" />
+     <Compile Include="Assets\PathFinding.cs" />
+     <Compile Include="Assets\SimpleMovement.cs" />
+     <Compile Include="Assets\SimpleMovementController.cs" />
+     <Compile Include="Assets\UpdateText.cs" />
+     <Compile Include="Assets\WeeWeeAI.cs" />
      <None Include="Assets\NewShader.shader" />
   </ItemGroup>
   <ItemGroup>

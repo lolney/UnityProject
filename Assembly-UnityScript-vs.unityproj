@@ -46,14 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AudioPlayRandom.js" />
-     <Compile Include="Assets\BlendMaterials.js" />
-     <Compile Include="Assets\MazeGeneration.js" />
-     <Compile Include="Assets\SimpleMovement.js" />
-     <Compile Include="Assets\SimpleMovementController.js" />
      <Compile Include="Assets\ThirdPerson.js" />
-     <Compile Include="Assets\UpdateText.js" />
-     <Compile Include="Assets\WeeWeeAI.js" />
      <None Include="Assets\NewShader.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>/Users/Luke/UnityProject/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
