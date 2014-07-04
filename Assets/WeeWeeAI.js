@@ -4,31 +4,31 @@ enum state {idle, left, right};
 private var current : state;
 
 function Start () {
-	//current = idle;
+	current = state.idle;
 }
 
 function Update () {
 	var rand : int = Random.Range(0, 2000);
-	 /*
+	 
 	switch(rand) {
 		case 0:
-			current = idle;
+			current = state.idle;
 			break;
 		case 1:
-			current = left;
+			current = state.left;
 			break;
 		case 2:
-			current = right;
+			current = state.right;
 			break;
 		case 3:
 			break;
 	}
 	
 	switch(current) {
-		case left:
+		case state.left:
 			break;
-		case right:
+		case state.right:
 			break;
-	} */
+	} 
 
 }
