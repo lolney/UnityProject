@@ -33,3 +33,6 @@ Cmd: preprocess
   insize=2424 outsize=2421 ok=1
 Cmd: preprocess
   insize=2384 outsize=2381 ok=1
+End of pipe
+
+Quitting shader compiler process

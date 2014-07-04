@@ -68,6 +68,7 @@ function move(movementAxis : float) {
 	}*/
 }
 function fly(movementAxis : float) {
+	print(movementAxis);
 	if(rigidbody2D.velocity.y < JumpPower * 2)
 		 rigidbody2D.velocity += JumpPower * movementAxis * transform.up / 10;
 	anim.Play("Flying", 0);
