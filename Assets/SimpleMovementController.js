@@ -57,5 +57,9 @@ public class SimpleMovementController {
 		
 		transform.localScale.x *= -1;
 	}
+	
+	function rotate(angle : float) {
+		transform.RotateAroundLocal(Vector3(0,0,1), angle);
+	}
 
 }

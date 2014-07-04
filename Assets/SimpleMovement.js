@@ -55,6 +55,14 @@ function Update () {
 		controller.fly(axisUp);
 	}
 	
+	if(Input.GetKey(KeyCode.Z)) {
+		controller.rotate(Mathf.PI / 100.0);
+	}
+	
+	if(Input.GetKey(KeyCode.X)) {
+		controller.rotate(-Mathf.PI / 100.0);
+	}
+	
 	return 0;
 		
 }
