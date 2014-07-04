@@ -13,9 +13,12 @@ public class MazeGeneration : MonoBehaviour {
 	public GameObject[] blockPrefabs;
 	
 	public List<Vector2>[,] maze;
+	public Node[,] map; 
+	public bool isDone = false;
 
 	void  Start (){
 		int[,] grid= new int[gridSize,gridSize];
+		map = new Node[gridSize-1,gridSize-1];
 		
 		for(int i=0; i<gridSize; i++)
 			for(int j=0; j<gridSize; j++)
@@ -28,16 +31,50 @@ public class MazeGeneration : MonoBehaviour {
 		createSprites(maze);
 		createPath();
 		
+		isDone = true;
+		
+	}
+	
+	void Update () {
+		if(Input.GetKey(KeyCode.M)) {
+			
+			Debug.Log("called2");
+			List<Node> path = A_Star(map[0,0], map[gridSize - 2, gridSize - 2]);
+			Debug.Log(path.Count);
+			
+			while(path.Count != 0) {
+				Node current = path[0];
+				Node next = path[1];
+				path.RemoveAt(0);
+				
+				Quaternion rotation = Quaternion.identity; 
+				
+				if((next.center.x - current.center.x) == 0){	// Vertical bar
+					if(next.center.y < current.center.y)	// Adjacent vertex is above
+						rotation = Quaternion.AngleAxis(90, new Vector3(0,0,1));
+					else 
+						rotation = Quaternion.AngleAxis(270, new Vector3(0,0,1));
+				}
+				if(next.center.y - current.center.y == 0){	// Horizontal bar
+					if(next.center.x < current.center.x)	// Adjacent vertex to the right
+						rotation = Quaternion.identity;
+					else
+						rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
+				}
+				
+				Instantiate(GameObject.Find("Arrow"), current.center, rotation);
+			}
+		}
 	}
 	
 	void createSprites(List<Vector2>[,] maze) {
-		
+		int jj = 0;
 		Vector3 pos = Player.position;
-		for(int a= 0; a < 3; a++)
-			for (int j= 0; j < (a + 1) * 7; j++)
-				for (int i= 0; i < gridSize; i++)			
-				for(int k= 0; k < maze[i,j].Count; k++) {
-					
+		for(int a= 0; a < blockPrefabs.Length; a++) {	// Types of block prefabs
+			int limit = (a + 1) * (int)(gridSize / blockPrefabs.Length);
+			for (int j = jj; j < limit; j++, jj++)			// Segmented along y axis
+				for (int i= 0; i < gridSize; i++)				// x axis		
+				for(int k= 0; k < maze[i,j].Count; k++) {			// Edges per vertex
 					Quaternion rotation = Quaternion.identity; 
 					
 					if((i - maze[i,j][k].x) == 0){	// Vertical bar
@@ -63,7 +100,7 @@ public class MazeGeneration : MonoBehaviour {
 					
 				}
 		
-		
+		}
 	}
 	
 	List<Vector2>[,] Prim (int[,] grid) {
@@ -165,18 +202,16 @@ public class MazeGeneration : MonoBehaviour {
 		return result;
 		
 	}
-	
-	public Node[,] map;
-	
+		
 	private void createPath() {
 		
-		map = new Node[gridSize-1,gridSize-1];
+	//	map = new Node[gridSize-1,gridSize-1];
 		Vector2 org = (Vector2)Player.position;
 		
 		for(int i=0; i<gridSize-1; i++)
 			for(int j=0; j<gridSize-1; j++){
-				map[i,j] = new Node();
-				map[i,j].center = org + new Vector2((float)blockSize * ((float)i + .5f), (float)blockSize * ((float)j + .5f));
+				Vector2 center = org + new Vector2((float)blockSize * ((float)i + .5f), (float)blockSize * ((float)j + .5f));
+				map[i,j] = new Node(center);
 			}
 			
 		map[0,0].start = true;
@@ -203,17 +238,79 @@ public class MazeGeneration : MonoBehaviour {
 					if(i != gridSize - 2)
 						map[i,j].right = map[i+1, j];
 				
-				int rand = (int)Random.Range(0,50);
-				if(rand == 0) Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);
+				int rand = (int)Random.Range(0,80);
+				if(rand == 0)
+				 	Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);
 			}
-			
+	}
+	
+	List<Node> A_Star(Node start, Node end) {
 		
+		float btwNodes = 10.0f;
+		
+		Queue<Node> neighbors = new Queue<Node>(); 
+		BHeap<Node> considered = new BHeap<Node>();
+		Dictionary<Node, Node> navigated = new Dictionary<Node, Node>();
+		
+		start.accumulated = 0;
+		start.score = start.distance(end);
+		considered.insert(start);
+		
+		while(!considered.isEmpty()) {
+			Node current = considered.remove();
+			if(current.center.Equals(end.center))
+				return constructPath(navigated, current);
 			
+			neighbors = current.findNeigbors();
+			Node neighbor;
+			while(neighbors.Count != 0) {
+				Debug.Log(neighbors.Count);
+				
+				neighbor = neighbors.Dequeue();
+				float tentativeScore = btwNodes + current.accumulated;
+				if(tentativeScore >= neighbor.accumulated)
+					continue;
+				
+				neighbor.accumulated = tentativeScore;
+				neighbor.score = neighbor.accumulated + neighbor.distance(end);
+				try{
+					navigated.Add(neighbor, current);
+				}
+				catch(System.ArgumentException) {
+					navigated.Remove(neighbor);
+					navigated.Add(neighbor, current);
+				}				
+				
+				if(!considered.contains(neighbor))
+					considered.insert(neighbor);
+				
+			}
+		}
+		
+		return new List<Node>();
+	}
+	
+	List<Node> constructPath(Dictionary<Node, Node> navigated, Node current) {
+		Node previous;
+		List<Node> path;
+		
+		if(navigated.TryGetValue(current, out previous)) {
+			path = constructPath(navigated, previous);
+			path.Insert(0, current);
+		}
+		else {
+			path = new List<Node>();
+			path.Insert(0, current);
+		}
+		
+		return path;
+		
 		
 	}
+	
 }
 
-public class Node {
+public class Node : System.IComparable<Node> {
 	public Vector2 center;
 	
 	public Node up = null;
@@ -224,11 +321,43 @@ public class Node {
 	public bool start = false;
 	public bool end = false;
 	
+	public float score = Mathf.Infinity;
+	public float accumulated = Mathf.Infinity;
+	
+	public Node(Vector2 center, bool start = false, bool end = false) {
+		this.center = center;
+		this.start = start;
+		this.end = end;
+	}
+	
+	public Queue<Node> findNeigbors() {
+		Queue<Node> result = new Queue<Node>();
+		
+		if(up != null)
+			result.Enqueue(up);
+		if(down != null)
+			result.Enqueue(down);
+		if(right != null)
+			result.Enqueue(right);
+		if(left != null)
+			result.Enqueue(left);
+			
+		return result;
+	}
+	
 	public float distance(Node n2) {
 		float deltaX = this.center.x - n2.center.x;
 		float deltaY = this.center.y - n2.center.y;
 		return Mathf.Sqrt((deltaY * deltaY) + (deltaX * deltaX));
-	}	
+	}
+	
+	public int CompareTo(Node a) {
+		return (int)(score - a.score);
+	}
+	
+	public bool Equals(Node a) {
+		return center.Equals(a.center);
+	}
 	
 }
 
@@ -245,6 +374,11 @@ public class AdjacencyObject : System.IComparable<AdjacencyObject> {
 	
 	public int CompareTo(AdjacencyObject a) {
 		return z - a.z;
+	}
+	
+	public bool Equals(AdjacencyObject a) {
+		if(CompareTo(a) == 0) return true;
+		else return false;
 	}
 }
 
@@ -301,6 +435,18 @@ public class BHeap<T> where T : System.IComparable<T>{
 		return result;
 	}
 	
+	public bool contains (T goal) {
+		return containsRecursive(goal, 0);
+	}
+	
+	private bool containsRecursive(T goal, int index) {
+		if(index >= size) return false;
+		if(A[index].Equals(goal)) return true;
+		
+		if(containsRecursive(goal, (index+1) * 2 - 1)) return true;
+		return containsRecursive(goal, (index+1) * 2);		
+	}
+	
 	private int upHeapify ( int i  ){
 		if(i == 0) return 0;
 		
@@ -355,3 +501,6 @@ public class BHeap<T> where T : System.IComparable<T>{
 	}
 	
 }
+
+	
+
