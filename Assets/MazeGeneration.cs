@@ -40,7 +40,7 @@ public class MazeGeneration : MonoBehaviour {
 			
 			Debug.Log("called2");
 			List<Node> path = A_Star(map[0,0], map[gridSize - 2, gridSize - 2]);
-			Debug.Log(path.Count);
+			path.Reverse();
 			
 			while(path.Count != 0) {
 				Node current = path[0];
@@ -50,13 +50,13 @@ public class MazeGeneration : MonoBehaviour {
 				Quaternion rotation = Quaternion.identity; 
 				
 				if((next.center.x - current.center.x) == 0){	// Vertical bar
-					if(next.center.y < current.center.y)	// Adjacent vertex is above
+					if(next.center.y > current.center.y)	// Adjacent vertex is above
 						rotation = Quaternion.AngleAxis(90, new Vector3(0,0,1));
 					else 
 						rotation = Quaternion.AngleAxis(270, new Vector3(0,0,1));
 				}
 				if(next.center.y - current.center.y == 0){	// Horizontal bar
-					if(next.center.x < current.center.x)	// Adjacent vertex to the right
+					if(next.center.x > current.center.x)	// Adjacent vertex to the right
 						rotation = Quaternion.identity;
 					else
 						rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
