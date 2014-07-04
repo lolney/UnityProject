@@ -75,7 +75,7 @@ function fly() {
 }
 
 function jump() {
-	if(colbelow) {
+	if(colBelow) {
 		colBelow = false;
 		rigidbody2D.velocity += Vector2(0, JumpPower);
 		anim.Play("Flying", 0);
