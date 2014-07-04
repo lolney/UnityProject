@@ -33,41 +33,54 @@ function OnCollisionEnter2D(collision : Collision2D) {
 	
 function Update () {
 
-	var move = Input.GetAxis("Horizontal");
+	var axis = Input.GetAxis("Horizontal");
 	
 	// If upside down, stop
 /*	if(transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270){
 		return 0;
 	} */
-		
-	// Flip
-	if((move > 0 && facingRight) || (move < 0 && !facingRight)) 
-			flip();
-				
+						
 	// Move
-	rigidbody2D.velocity = Vector2(Speed * move, rigidbody2D.velocity.y);
+	move(axis);
+	
+	// Jump
+	if(Input.GetKey (KeyCode.Space)) {
+		jump();
+	}
+	
+	if(Input.GetAxis("Vertical") > 0) {
+		fly();
+	}
+	
+	return 0;
+		
+}
+
+function move(movementAxis : float) {
+	if((movementAxis > 0 && facingRight) || (movementAxis < 0 && !facingRight)) 
+			flip();
+
+	rigidbody2D.velocity = Vector2(Speed * movementAxis, rigidbody2D.velocity.y);
 	/*if(colBelow && move != 0) {
 		colBelow = false;
 		rigidbody2D.velocity = Vector2(move * Speed, JumpPower/2.0);
 	}*/
-	
-	// Jump
-	if(Input.GetKey (KeyCode.Space) && colBelow) {
+}
+function fly() {
+	if(rigidbody2D.velocity.y < JumpPower * 2)
+		 rigidbody2D.velocity += JumpPower * transform.up / 10;
+	anim.Play("Flying", 0);
+	colBelow = false;
+	anim.enabled = true;
+}
+
+function jump() {
+	if(colbelow) {
 		colBelow = false;
 		rigidbody2D.velocity += Vector2(0, JumpPower);
 		anim.Play("Flying", 0);
 		anim.enabled = true;
 	}
-	
-	if(Input.GetAxis("Vertical") > 0) {
-		if(rigidbody2D.velocity.y < JumpPower * 2) rigidbody2D.velocity += JumpPower * transform.up / 10;
-		anim.Play("Flying", 0);
-		colBelow = false;
-		anim.enabled = true;
-	}
-	
-	return 0;
-		
 }
 
 function flip() {

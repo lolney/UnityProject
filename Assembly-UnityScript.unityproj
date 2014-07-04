@@ -52,6 +52,7 @@
      <Compile Include="Assets\SimpleMovement.js" />
      <Compile Include="Assets\ThirdPerson.js" />
      <Compile Include="Assets\UpdateText.js" />
+     <Compile Include="Assets\WeeWeeAI.js" />
      <None Include="Assets\NewShader.shader" />
   </ItemGroup>
   <ItemGroup>
