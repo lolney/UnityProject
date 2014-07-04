@@ -2,7 +2,7 @@
 
 import SimpleMovementController;
 
-enum state {idle, left, right};
+enum state {idle, left, right, fly};
 private var current : state;
 private var controller : SimpleMovementController;
 
@@ -18,9 +18,15 @@ function Start () {
 
 }
 
+function OnCollisionEnter2D(collision : Collision2D) {
+	controller.OnCollisionEnter2D(collision);
+}
+
 function Update () {
 	var rand : int = Random.Range(0, 250);
-	 
+	
+	transform.localRotation = Quaternion.identity; 
+
 	switch(rand) {
 		case 0:
 			print("Switched state to idle");
@@ -38,6 +44,10 @@ function Update () {
 			print("Switched state to jump");
 			controller.jump();
 			break;
+		case 4:
+			print("Switched state to fly");
+			current = state.fly;
+			break;
 	}
 	
 	switch(current) {
@@ -46,6 +56,9 @@ function Update () {
 			break;
 		case state.right:
 			controller.move(1);
+			break;
+		case state.fly:
+			controller.fly(.25);
 			break;
 	} 
 

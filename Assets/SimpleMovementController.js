@@ -11,7 +11,21 @@ public class SimpleMovementController {
 	private var JumpPower : float;	
 	private var transform : Transform;
 	private var rigidbody2D : Rigidbody2D;
-
+	
+	public var OnCollisionEnter2D = function(collision : Collision2D) {
+			
+		if(collision.contacts.Length > 0)
+		{
+			var contact = collision.contacts[0];
+			
+			if(Vector3.Dot(contact.normal, Vector3.up) > 0.5)
+			{
+				colBelow = true;
+				anim.enabled = false;
+				
+			}
+		}
+	};
 
 	function SimpleMovementController(transform : Transform, rigidbody2D : Rigidbody2D, anim : Animator, Speed : float, JumpPower : float) {
 		this.transform = transform;

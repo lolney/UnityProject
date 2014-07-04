@@ -15,23 +15,13 @@ function Start () {
 	anim.enabled = false;
 	
 	controller = new SimpleMovementController(transform, rigidbody2D, anim, Speed, JumpPower);
-	
+
 }
 
 function OnCollisionEnter2D(collision : Collision2D) {
-		
-	if(collision.contacts.Length > 0)
-	{
-		var contact = collision.contacts[0];
-		
-		if(Vector3.Dot(contact.normal, Vector3.up) > 0.5)
-		{
-			controller.colBelow = true;
-			anim.enabled = false;
-			
-		}
-	}
+	controller.OnCollisionEnter2D(collision);
 }
+
 	
 function Update () {
 
