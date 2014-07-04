@@ -1,11 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SimpleMovement.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/WeeWeeAI.js">
     <Files>
       <File FileName="Assets/NewShader.shader" Line="11" Column="15" />
       <File FileName="Assets/AudioPlayRandom.js" Line="1" Column="1" />
-      <File FileName="Assets/WeeWeeAI.js" Line="7" Column="11" />
-      <File FileName="Assets/SimpleMovement.js" Line="45" Column="13" />
+      <File FileName="Assets/WeeWeeAI.js" Line="4" Column="1" />
+      <File FileName="Assets/SimpleMovement.js" Line="4" Column="1" />
       <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/PlatformInputController.js" Line="41" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>

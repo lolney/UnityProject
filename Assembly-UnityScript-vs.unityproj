@@ -50,6 +50,7 @@
      <Compile Include="Assets\BlendMaterials.js" />
      <Compile Include="Assets\MazeGeneration.js" />
      <Compile Include="Assets\SimpleMovement.js" />
+     <Compile Include="Assets\SimpleMovementController.js" />
      <Compile Include="Assets\ThirdPerson.js" />
      <Compile Include="Assets\UpdateText.js" />
      <Compile Include="Assets\WeeWeeAI.js" />
