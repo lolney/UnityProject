@@ -63,6 +63,8 @@ function Update () {
 		controller.rotate(-Mathf.PI / 100.0);
 	}
 	
+	transform.localRotation = Quaternion.identity; 
+	
 	return 0;
 		
 }
