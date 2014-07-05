@@ -6,6 +6,7 @@ public class WeeWeeAI : MonoBehaviour {
 
 	enum state {idle, left, right, fly};
 	private state current;
+	public bool stateOverride = false;
 	private SimpleMovementController controller;
 
 	public float Speed= 4.0f;	
@@ -26,29 +27,33 @@ public class WeeWeeAI : MonoBehaviour {
 		int rand = Random.Range(0, 250);
 		
 		transform.localRotation = Quaternion.identity; 
-
-		switch(rand) {
-			case 0:
-				//print(gameObject + " Switched state to idle");
-				current = state.idle;
-				break;
-			case 1:
-				//print(gameObject + " Switched state to left");
-				current = state.left;
-				break;
-			case 2:
-				//print(gameObject + " Switched state to right");
-				current = state.right;
-				break;
-			case 3:
-				//print(gameObject + " Switched state to jump");
-				controller.jump();
-				break;
-			case 4:
-				//print(gameObject + " Switched state to fly");
-				current = state.fly;
-				break;
+	
+		if(!stateOverride){
+			switch(rand) {
+				case 0:
+					//print(gameObject + " Switched state to idle");
+					current = state.idle;
+					break;
+				case 1:
+					//print(gameObject + " Switched state to left");
+					current = state.left;
+					break;
+				case 2:
+					//print(gameObject + " Switched state to right");
+					current = state.right;
+					break;
+				case 3:
+					//print(gameObject + " Switched state to jump");
+					controller.jump();
+					break;
+				case 4:
+					//print(gameObject + " Switched state to fly");
+					current = state.fly;
+					break;
+			}
 		}
+		
+		
 		
 		switch(current) {
 			case state.left:

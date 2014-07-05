@@ -39,12 +39,16 @@ public class MazeGeneration : MonoBehaviour {
 		if(Input.GetKey(KeyCode.M)) {
 			
 			Debug.Log("called2");
-			List<Node> path = A_Star(map[0,0], map[gridSize - 2, gridSize - 2]);
-			path.Reverse();
+			Node end = map[gridSize - 2, gridSize - 2];
+			List<Node> path = A_Star(map[0,0], end);
 			
+			Node next;
 			while(path.Count != 0) {
 				Node current = path[0];
-				Node next = path[1];
+				if(path.Count != 1)
+					 next = path[1];
+			 	else 
+			 		next = end;
 				path.RemoveAt(0);
 				
 				Quaternion rotation = Quaternion.identity; 
@@ -238,9 +242,17 @@ public class MazeGeneration : MonoBehaviour {
 					if(i != gridSize - 2)
 						map[i,j].right = map[i+1, j];
 				
-				int rand = (int)Random.Range(0,80);
-				if(rand == 0)
-				 	Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);
+				if(map[i,j].findNeigbors().Count == 1){
+					if(map[i,j].down == null){
+						int rand = (int)Random.Range(0,10);
+						if(rand == 0){
+							Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);
+							Instantiate(GameObject.Find("BambooCage"), loc, Quaternion.identity);
+						}
+							
+					}
+				}
+				
 			}
 	}
 	
@@ -251,6 +263,13 @@ public class MazeGeneration : MonoBehaviour {
 		Queue<Node> neighbors = new Queue<Node>(); 
 		BHeap<Node> considered = new BHeap<Node>();
 		Dictionary<Node, Node> navigated = new Dictionary<Node, Node>();
+		
+		for(int i=0; i< gridSize - 1;i++)
+		for(int j=0; j< gridSize - 1;j++){
+				map[i,j].accumulated = Mathf.Infinity;
+				map[i,j].score = Mathf.Infinity;
+		}
+				
 		
 		start.accumulated = 0;
 		start.score = start.distance(end);
@@ -296,11 +315,11 @@ public class MazeGeneration : MonoBehaviour {
 		
 		if(navigated.TryGetValue(current, out previous)) {
 			path = constructPath(navigated, previous);
-			path.Insert(0, current);
+			path.Insert(path.Count, current);
 		}
 		else {
 			path = new List<Node>();
-			path.Insert(0, current);
+			path.Insert(path.Count, current);
 		}
 		
 		return path;
