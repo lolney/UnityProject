@@ -14,6 +14,7 @@ public class UpdateText : MonoBehaviour {
 	private float start2 = 0;
 	
 	void Start(){
+		
 		textMesh = GetComponent<TextMesh>();
 		textMesh.text = "";
 		start = Time.time;
@@ -57,7 +58,7 @@ public class UpdateText : MonoBehaviour {
 		
 		var pos = transform.position;
 		pos = Camera.main.transform.position;
-		pos.y += 2 * Camera.main.orthographicSize / 3;
+		pos.y += 3 * Camera.main.orthographicSize / 4;
 		transform.position = pos;	
 		
 		pos.z = 0;
@@ -77,12 +78,12 @@ public class UpdateText : MonoBehaviour {
 			textMesh.text = "Use the mouse\n To fire notes \n At the enemy";
 		}
 		
-		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif)/Mathf.Log(10), .3f);
+		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif)/Mathf.Log(10), .15f);
 	}
 	
 	void showGameOver(float dif){
 		textMesh.transform.localScale = Vector3.one;
-		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif)/Mathf.Log(10), .3f);
+		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif)/Mathf.Log(10), .18f);
 		if(catCages > playerCages)
 			textMesh.text = "You have lost!";
 		else if(playerCages > catCages)

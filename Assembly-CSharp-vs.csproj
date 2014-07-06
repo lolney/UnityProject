@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\AudioPlayRandom.cs" />
      <Compile Include="Assets\BlendMaterials.cs" />
+     <Compile Include="Assets\CameraSize.cs" />
      <Compile Include="Assets\CatAI.cs" />
      <Compile Include="Assets\DestroyAfterSeconds.cs" />
      <Compile Include="Assets\DestroyCage.cs" />

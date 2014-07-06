@@ -1,15 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MazeGeneration.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UpdateText.cs">
     <Files>
       <File FileName="Assets/WeeWeeAI.cs" Line="84" Column="6" />
-      <File FileName="Assets/SimpleMovementController.cs" Line="125" Column="6" />
-      <File FileName="Assets/MazeGeneration.cs" Line="252" Column="73" />
-      <File FileName="Assets/BlendMaterials.cs" Line="1" Column="5" />
-      <File FileName="Assets/DestroyCage.cs" Line="30" Column="31" />
-      <File FileName="Assets/CatAI.cs" Line="115" Column="4" />
-      <File FileName="Assets/PathFinding.cs" Line="110" Column="5" />
-      <File FileName="Assets/DestroyAfterSeconds.cs" Line="15" Column="3" />
+      <File FileName="Assets/SimpleMovementController.cs" Line="137" Column="23" />
+      <File FileName="Assets/MazeGeneration.cs" Line="285" Column="37" />
+      <File FileName="Assets/DestroyCage.cs" Line="61" Column="1" />
+      <File FileName="Assets/CatAI.cs" Line="119" Column="1" />
+      <File FileName="Assets/UpdateText.cs" Line="17" Column="3" />
+      <File FileName="Assets/SimpleMovement.cs" Line="31" Column="53" />
+      <File FileName="Assets/PathFinding.cs" Line="25" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

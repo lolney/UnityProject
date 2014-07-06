@@ -4,7 +4,7 @@ public var Player : Transform;
 
 function Update () {
 	
-	var offset = ( 2 * ( Camera.main.orthographicSize / 3) - Player.position.y);
+	var offset = (4 * ( Camera.main.orthographicSize / 5) - Player.position.y);
 	if(offset < 0) offset = 0;
 		
 	transform.position.x = Player.position.x;
