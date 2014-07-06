@@ -8,7 +8,7 @@ public class CatAI : MonoBehaviour {
 	public bool stateOverride = true;
 	private SimpleMovementController controller = null;
 	
-	private float Speed= 1f;	
+	private float Speed= 2f;	
 	public float JumpPower= 30.0f;	
 	
 	private Node[,] map;

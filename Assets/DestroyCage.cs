@@ -57,7 +57,7 @@ public class DestroyCage : MonoBehaviour {
 			}
 			
 			transform.DetachChildren();
-			Destroy(gameObject);
+			Destroy(gameObject); 
 
 		}
 	}

@@ -12,10 +12,12 @@ public class SimpleMovement : MonoBehaviour {
 	public float jumpPower= 10.0f;
 	
 	private float time = 0;	
-
+	private List<GameObject> arrows;
+	
 	void  Start (){
 		controller = new SimpleMovementController(gameObject, speed, jumpPower);
 		time = Time.time;
+		arrows = new List<GameObject>();
 	}
 
 	void  OnCollisionEnter2D ( Collision2D collision  ){
@@ -24,7 +26,10 @@ public class SimpleMovement : MonoBehaviour {
 
 		
 	int  Update (){
-
+		
+		if(UpdateText.cages <= 0 && transform.position.y > MazeGeneration.gridSize * 10)
+			Application.LoadLevel(Application.loadedLevel + 1);
+		
 		float axis= Input.GetAxis("Horizontal");
 		float axisUp= Input.GetAxis("Vertical");
 		
@@ -34,8 +39,8 @@ public class SimpleMovement : MonoBehaviour {
 		} */
 		// Show hint
 		
-		if(Input.GetKey(KeyCode.M))
-			showHint();
+		if(Input.GetKeyDown(KeyCode.M))
+			if(UpdateText.hints > 0) showHint();
 						
 		// Move
 		controller.move(axis);
@@ -81,11 +86,15 @@ public class SimpleMovement : MonoBehaviour {
 		note.renderer.material.color = color;
 	
 		time = Time.time;
+		DestroyAfterSeconds.Destroy(note, 2);
 	}
 	
 	 void showHint(){
 		
-		UpdateText.playerCages++;
+		UpdateText.hints--;
+		foreach(GameObject obj in arrows)
+			Destroy(obj);
+		
 		PathFinding pfinder = new PathFinding();
 		GameObject scripts = GameObject.Find("Scripts");
 		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
@@ -122,7 +131,7 @@ public class SimpleMovement : MonoBehaviour {
 					rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
 			}
 			
-			Instantiate(GameObject.Find("Arrow"), current.center, rotation);
+			arrows.Add((GameObject)Instantiate(GameObject.Find("Arrow"), current.center, rotation));
 		}
 	}
 }

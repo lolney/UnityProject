@@ -115,6 +115,11 @@ public class PathFinding {
 		xPos /= 10;
 		Debug.Log(xPos + " " + yPos);
 		
+		if(xPos < 0) xPos = 0;
+		if(yPos < 0) yPos = 0;
+		if(xPos > map.GetLength(0)) xPos = map.GetLength(0) - 1;
+		if(yPos > map.GetLength(1)) yPos = map.GetLength(1) - 1;
+		
 		return map[xPos, yPos];
 	}
 	
