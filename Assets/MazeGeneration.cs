@@ -14,7 +14,9 @@ public class MazeGeneration : MonoBehaviour {
 	
 	public List<Vector2>[,] maze;
 	public Node[,] map; 
-	public bool isDone = false;
+	public Vector3 pos;
+	
+	private PathFinding pfinder;
 
 	void  Start (){
 		int[,] grid= new int[gridSize,gridSize];
@@ -31,7 +33,7 @@ public class MazeGeneration : MonoBehaviour {
 		createSprites(maze);
 		createPath();
 		
-		isDone = true;
+		pfinder = new PathFinding();
 		
 	}
 	
@@ -40,7 +42,7 @@ public class MazeGeneration : MonoBehaviour {
 			
 			Debug.Log("called2");
 			Node end = map[gridSize - 2, gridSize - 2];
-			List<Node> path = A_Star(map[0,0], end);
+			List<Node> path = pfinder.A_Star(map[0,0], end);
 			
 			Node next;
 			while(path.Count != 0) {
@@ -73,7 +75,7 @@ public class MazeGeneration : MonoBehaviour {
 	
 	void createSprites(List<Vector2>[,] maze) {
 		int jj = 0;
-		Vector3 pos = Player.position;
+		pos = Player.position;
 		for(int a= 0; a < blockPrefabs.Length; a++) {	// Types of block prefabs
 			int limit = (a + 1) * (int)(gridSize / blockPrefabs.Length);
 			for (int j = jj; j < limit; j++, jj++)			// Segmented along y axis
@@ -246,8 +248,9 @@ public class MazeGeneration : MonoBehaviour {
 					if(map[i,j].down == null){
 						int rand = (int)Random.Range(0,10);
 						if(rand == 0){
-							Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);
-							Instantiate(GameObject.Find("BambooCage"), loc, Quaternion.identity);
+							GameObject ww = (GameObject)Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);					
+							GameObject cage = (GameObject)Instantiate(GameObject.Find("BambooCage"), loc, Quaternion.identity);
+							ww.transform.parent = cage.transform;
 						}
 							
 					}
@@ -255,78 +258,7 @@ public class MazeGeneration : MonoBehaviour {
 				
 			}
 	}
-	
-	List<Node> A_Star(Node start, Node end) {
 		
-		float btwNodes = 10.0f;
-		
-		Queue<Node> neighbors = new Queue<Node>(); 
-		BHeap<Node> considered = new BHeap<Node>();
-		Dictionary<Node, Node> navigated = new Dictionary<Node, Node>();
-		
-		for(int i=0; i< gridSize - 1;i++)
-		for(int j=0; j< gridSize - 1;j++){
-				map[i,j].accumulated = Mathf.Infinity;
-				map[i,j].score = Mathf.Infinity;
-		}
-				
-		
-		start.accumulated = 0;
-		start.score = start.distance(end);
-		considered.insert(start);
-		
-		while(!considered.isEmpty()) {
-			Node current = considered.remove();
-			if(current.center.Equals(end.center))
-				return constructPath(navigated, current);
-			
-			neighbors = current.findNeigbors();
-			Node neighbor;
-			while(neighbors.Count != 0) {
-				Debug.Log(neighbors.Count);
-				
-				neighbor = neighbors.Dequeue();
-				float tentativeScore = btwNodes + current.accumulated;
-				if(tentativeScore >= neighbor.accumulated)
-					continue;
-				
-				neighbor.accumulated = tentativeScore;
-				neighbor.score = neighbor.accumulated + neighbor.distance(end);
-				try{
-					navigated.Add(neighbor, current);
-				}
-				catch(System.ArgumentException) {
-					navigated.Remove(neighbor);
-					navigated.Add(neighbor, current);
-				}				
-				
-				if(!considered.contains(neighbor))
-					considered.insert(neighbor);
-				
-			}
-		}
-		
-		return new List<Node>();
-	}
-	
-	List<Node> constructPath(Dictionary<Node, Node> navigated, Node current) {
-		Node previous;
-		List<Node> path;
-		
-		if(navigated.TryGetValue(current, out previous)) {
-			path = constructPath(navigated, previous);
-			path.Insert(path.Count, current);
-		}
-		else {
-			path = new List<Node>();
-			path.Insert(path.Count, current);
-		}
-		
-		return path;
-		
-		
-	}
-	
 }
 
 public class Node : System.IComparable<Node> {

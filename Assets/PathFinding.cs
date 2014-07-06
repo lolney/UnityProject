@@ -2,51 +2,35 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PathFinding : MonoBehaviour {
+public class PathFinding {
 	
-	private Node[,] map;
+	public Node[,] map;
 	private List<Vector2>[,] maze;
 	private int gridSize;
-	
-	void Start () {
+		
+	public PathFinding () {
 		GameObject scripts = GameObject.Find("Scripts");
 		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
-		while(!mg.isDone) {
-			StartCoroutine("Wait");
-		}
 		
 		map = mg.map;
 		maze = mg.maze;
 		gridSize = mg.gridSize;
 	}
-	
-	IEnumerator Wait()
-	{
-		yield return new WaitForSeconds(1);
-	}
-	
-	void Update () {
-		if(Input.GetKey(KeyCode.M)) {
 		
-			Debug.Log("called2");
-			List<Node> path = A_Star(map[0,0], map[gridSize - 2, gridSize - 2]);
-			Debug.Log(path.Count);
-			
-			while(path.Count != 0) {
-				Node current = path[0];
-				path.RemoveAt(0);
-				Instantiate(GameObject.Find("TestBlock"), current.center, Quaternion.identity);
-			}
-		}
-	}
-	
-	List<Node> A_Star(Node start, Node end) {
+	public List<Node> A_Star(Node start, Node end) {
 		
 		float btwNodes = 10.0f;
 		
 		Queue<Node> neighbors = new Queue<Node>(); 
 		BHeap<Node> considered = new BHeap<Node>();
 		Dictionary<Node, Node> navigated = new Dictionary<Node, Node>();
+		
+		for(int i=0; i< gridSize - 1;i++)
+		for(int j=0; j< gridSize - 1;j++){
+			map[i,j].accumulated = Mathf.Infinity;
+			map[i,j].score = Mathf.Infinity;
+		}
+		
 		
 		start.accumulated = 0;
 		start.score = start.distance(end);
@@ -60,11 +44,12 @@ public class PathFinding : MonoBehaviour {
 			neighbors = current.findNeigbors();
 			Node neighbor;
 			while(neighbors.Count != 0) {
+				
 				neighbor = neighbors.Dequeue();
 				float tentativeScore = btwNodes + current.accumulated;
 				if(tentativeScore >= neighbor.accumulated)
 					continue;
-					
+				
 				neighbor.accumulated = tentativeScore;
 				neighbor.score = neighbor.accumulated + neighbor.distance(end);
 				try{
@@ -90,16 +75,47 @@ public class PathFinding : MonoBehaviour {
 		
 		if(navigated.TryGetValue(current, out previous)) {
 			path = constructPath(navigated, previous);
-			path.Insert(0, current);
+			path.Insert(path.Count, current);
 		}
 		else {
 			path = new List<Node>();
-			path.Insert(0, current);
+			path.Insert(path.Count, current);
 		}
 		
 		return path;
 		
 		
+	}
+	
+	public static Node findClosestNode(Transform obj) {
+		
+		GameObject scripts = GameObject.Find("Scripts");
+		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
+		Vector3 mazePos = mg.pos;
+		Node[,] map = mg.map;
+		
+		int yPos = (int)(obj.position.y - (mazePos.y + 5));
+		int xPos = (int)(obj.position.x - (mazePos.x + 5));
+		
+		int y = yPos % 10;
+		int x = xPos % 10;
+		yPos -= y;
+		xPos -= x;
+		 
+		if(x >= 5) x = 10;
+		if(x < 5) x = 0;
+		if(y >= 5) y = 10;
+		if(y < 5) y = 0;
+		
+		yPos += y;
+		xPos += x;
+		
+		Debug.Log(xPos + " " + yPos);
+		yPos /= 10;
+		xPos /= 10;
+		Debug.Log(xPos + " " + yPos);
+		
+		return map[xPos, yPos];
 	}
 	
 	

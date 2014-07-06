@@ -41,15 +41,7 @@ public class SimpleMovement : MonoBehaviour {
 		if(Input.GetAxis("Vertical") != 0) {
 			controller.fly(axisUp);
 		}
-		
-		if(Input.GetKey(KeyCode.Z)) {
-			controller.rotate(Mathf.PI / 100.0f);
-		}
-		
-		if(Input.GetKey(KeyCode.X)) {
-			controller.rotate(-Mathf.PI / 100.0f);
-		}
-		
+				
 		transform.localRotation = Quaternion.identity; 
 		
 		return 0;
