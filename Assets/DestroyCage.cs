@@ -11,23 +11,21 @@ public class DestroyCage : MonoBehaviour {
 		GameObject scripts = GameObject.Find("Scripts");
 		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
 		Node end;
-		
-		GameObject gui = GameObject.Find("GUI Text");
-		UpdateText txt = gui.GetComponent<UpdateText>();
-		
-		if(other.gameObject.name.Equals("Main Character")) {
+				
+		string name = other.gameObject.name;
+		if(name.Equals("Main Character") || name.StartsWith("Note")) {
 			Debug.Log("Main Char Entered");
 			end = mg.map[MazeGeneration.gridSize - 2, MazeGeneration.gridSize - 2];
 			destroy(end);
-			txt.playerCages++;
-			txt.cages--;
+			UpdateText.playerCages++;
+			UpdateText.cages--;
 		}
-		else if(other.gameObject.name.Equals("Cat")) {
+		else if(name.Equals("Cat")) {
 			Debug.Log("Cat Entered");
 			end = mg.map[0, MazeGeneration.gridSize - 2];
 			destroy(end);
-			txt.catCages++;
-			txt.cages--;
+			UpdateText.catCages++;
+			UpdateText.cages--;
 		}
 			
 	}

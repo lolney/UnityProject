@@ -37,43 +37,7 @@ public class MazeGeneration : MonoBehaviour {
 		pfinder = new PathFinding();
 		Debug.Log(Time.time - start);
 	}
-	
-	void Update () {
-		if(Input.GetKey(KeyCode.M)) {
-			
-			Debug.Log("called2");
-			Node end = map[gridSize - 2, gridSize - 2];
-			List<Node> path = pfinder.A_Star(map[0,0], end);
-			
-			Node next;
-			while(path.Count != 0) {
-				Node current = path[0];
-				if(path.Count != 1)
-					 next = path[1];
-			 	else 
-			 		next = end;
-				path.RemoveAt(0);
-				
-				Quaternion rotation = Quaternion.identity; 
-				
-				if((next.center.x - current.center.x) == 0){	// Vertical bar
-					if(next.center.y > current.center.y)	// Adjacent vertex is above
-						rotation = Quaternion.AngleAxis(90, new Vector3(0,0,1));
-					else 
-						rotation = Quaternion.AngleAxis(270, new Vector3(0,0,1));
-				}
-				if(next.center.y - current.center.y == 0){	// Horizontal bar
-					if(next.center.x > current.center.x)	// Adjacent vertex to the right
-						rotation = Quaternion.identity;
-					else
-						rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
-				}
-				
-				Instantiate(GameObject.Find("Arrow"), current.center, rotation);
-			}
-		}
-	}
-	
+		
 	void createSprites(List<Vector2>[,] maze) {
 		int jj = 0;
 		pos = Player.position;
@@ -246,10 +210,7 @@ public class MazeGeneration : MonoBehaviour {
 						map[i,j].right = map[i+1, j];
 				
 			}
-			
-		GameObject gui = GameObject.Find("GUI Text");
-		UpdateText txt = gui.GetComponent<UpdateText>();
-		
+					
 		for(int i=0; i<gridSize-1; i++)
 		for(int j=0; j<gridSize-1; j++) {	
 			if(map[i,j].findNeigbors().Count == 1)
@@ -267,7 +228,7 @@ public class MazeGeneration : MonoBehaviour {
 					}
 					ww.transform.parent = cage.transform;	
 					map[i,j].cage = true;	
-					txt.cages++;
+					UpdateText.cages++;
 				}
 				
 			}
@@ -297,6 +258,32 @@ public class Node : System.IComparable<Node> {
 		this.center = center;
 		this.start = start;
 		this.end = end;
+	}
+	
+	public Node findCage(Node[,] map) {
+		
+		Node current = this;
+		
+		for(int i=0; i< MazeGeneration.gridSize - 1;i++)
+		for(int j=0; j< MazeGeneration.gridSize - 1;j++){
+			map[i,j].explored = false;
+		}
+		
+		Queue<Node> frontier;
+		
+		frontier = current.findNeigbors(true);
+		
+		int count = 0;
+		while(frontier.Count != 0){
+			count++;
+			current = frontier.Dequeue();
+			if(current.cage) return current;
+			current.findNeigbors(frontier, true);
+			
+		}
+		
+		Debug.Log("No cages found. Searched nodes: " + count);
+		return null;
 	}
 	
 	public Queue<Node> findNeigbors(bool markExplored = false) {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SimpleMovement : MonoBehaviour {
 
@@ -8,11 +9,13 @@ public class SimpleMovement : MonoBehaviour {
 	private SimpleMovementController controller;
 
 	public float speed = 12.0f;	
-	public float jumpPower= 10.0f;	
+	public float jumpPower= 10.0f;
+	
+	private float time = 0;	
 
 	void  Start (){
 		controller = new SimpleMovementController(gameObject, speed, jumpPower);
-
+		time = Time.time;
 	}
 
 	void  OnCollisionEnter2D ( Collision2D collision  ){
@@ -29,7 +32,11 @@ public class SimpleMovement : MonoBehaviour {
 	/*	if(transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270){
 			return 0;
 		} */
-							
+		// Show hint
+		
+		if(Input.GetKey(KeyCode.M))
+			showHint();
+						
 		// Move
 		controller.move(axis);
 		
@@ -38,8 +45,9 @@ public class SimpleMovement : MonoBehaviour {
 			controller.jump();
 		}
 		
-		if(Input.GetMouseButtonDown(0)) {
-			fireNote();
+		if(Input.GetMouseButton(0)) {
+			if(Time.time - time > .2)
+				fireNote();
 		}
 		
 		if(Input.GetAxis("Vertical") != 0) {
@@ -53,9 +61,68 @@ public class SimpleMovement : MonoBehaviour {
 	}
 	
 	void fireNote() {
-		GameObject note = (GameObject)Instantiate(GameObject.Find("Note1"),transform.position,Quaternion.identity);
-		Vector2 direction = (Vector2)(Input.mousePosition - transform.position);
-		note.rigidbody2D.velocity = direction;
+		
+		string name;
+		if((int)Random.Range(0,2) == 0)
+			name = "Note1";
+		else 
+			name = "Note2";
+			
+		GameObject note = (GameObject)Instantiate(GameObject.Find(name),transform.position,Quaternion.identity);
+		
+		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector2 direction = (Vector2)(mousePos - transform.position);
+		note.rigidbody2D.velocity = direction * 2;
+		
+		Color color = note.renderer.material.color;
+		color.r = Random.Range(.7f,1f);
+		color.g = Random.Range(.7f,1f);
+		color.b = Random.Range(.7f,1f);
+		note.renderer.material.color = color;
 	
+		time = Time.time;
+	}
+	
+	 void showHint(){
+		
+		UpdateText.playerCages++;
+		PathFinding pfinder = new PathFinding();
+		GameObject scripts = GameObject.Find("Scripts");
+		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
+		
+		Node[,] map = mg.map;
+		Node start = PathFinding.findClosestNode(transform);
+		Node end = start.findCage(map);
+		if(end == null) 
+			end = map[MazeGeneration.gridSize - 2, MazeGeneration.gridSize - 2];
+		
+		List<Node> path = pfinder.A_Star(start, end);
+		
+		Node next;
+		while(path.Count != 0) {
+			Node current = path[0];
+			if(path.Count != 1)
+				next = path[1];
+			else 
+				next = end;
+			path.RemoveAt(0);
+			
+			Quaternion rotation = Quaternion.identity; 
+			
+			if((next.center.x - current.center.x) == 0){	// Vertical bar
+				if(next.center.y > current.center.y)	// Adjacent vertex is above
+					rotation = Quaternion.AngleAxis(90, new Vector3(0,0,1));
+				else 
+					rotation = Quaternion.AngleAxis(270, new Vector3(0,0,1));
+			}
+			if(next.center.y - current.center.y == 0){	// Horizontal bar
+				if(next.center.x > current.center.x)	// Adjacent vertex to the right
+					rotation = Quaternion.identity;
+				else
+					rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
+			}
+			
+			Instantiate(GameObject.Find("Arrow"), current.center, rotation);
+		}
 	}
 }

@@ -13,9 +13,12 @@ public class CatAI : MonoBehaviour {
 	
 	private Node[,] map;
 	private Node end;
+	private Animator anim;
 	
 	void  Start (){
-				
+		
+		anim = GetComponent<Animator>();
+		
 		if(controller == null)
 			controller = new SimpleMovementController(gameObject, Speed, JumpPower);
 			
@@ -26,10 +29,21 @@ public class CatAI : MonoBehaviour {
 		
 	}
 	
+	void OnTriggerEnter2D(Collider2D other){
+		if(other.gameObject.name.StartsWith("Note")){
+			
+			anim.Play("CatAngel", 0);
+			current = state.idle;
+			
+			StartCoroutine(idle(15));
+			Destroy(other);
+		}
+	}
+	
 	IEnumerator wait() {
 		Vector2 pos = (Vector2)GameObject.Find("Main Character").transform.position;
 		
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(0f);
 		
 		GameObject scripts = GameObject.Find("Scripts");
 		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
@@ -41,16 +55,15 @@ public class CatAI : MonoBehaviour {
 		transform.position = pos + new Vector2(15f,5f);
 	}
 	
-	IEnumerator idle() {
+	IEnumerator idle(float s) {
 		
-		yield return new WaitForSeconds(.5f);
+		yield return new WaitForSeconds(s);
 		current = state.path;
+		
+		anim.Play("Flying", 0);
 	}
 	
 	void  OnCollisionEnter2D ( Collision2D collision  ){
-		if(controller == null)
-			controller = new SimpleMovementController(gameObject, Speed, JumpPower);
-		controller.OnCollisionEnter2D(collision);
 	}
 	
 	public void beginPathNav(Node start, Node end) {
@@ -105,7 +118,7 @@ public class CatAI : MonoBehaviour {
 		case state.path:			
 			if(!end.cage || controller.followPath()){
 				Node begin = PathFinding.findClosestNode(transform);
-				end = findCage(begin);
+				end = begin.findCage(map);
 				if(end == null){
 					current = state.idle;
 					stateOverride = false;
@@ -116,7 +129,7 @@ public class CatAI : MonoBehaviour {
 				beginPathNav(begin, end);
 				
 				current = state.idle;
-				StartCoroutine(idle());
+				StartCoroutine(idle(.5f));
 				
 			}
 			break;
@@ -124,27 +137,4 @@ public class CatAI : MonoBehaviour {
 		
 	}
 	
-	private Node findCage(Node current) {
-		
-		for(int i=0; i< MazeGeneration.gridSize - 1;i++)
-		for(int j=0; j< MazeGeneration.gridSize - 1;j++){
-			map[i,j].explored = false;
-		}
-		
-		Queue<Node> frontier;
-		
-		frontier = current.findNeigbors(true);
-	
-		int count = 0;
-		while(frontier.Count != 0){
-			count++;
-			current = frontier.Dequeue();
-			if(current.cage) return current;
-			current.findNeigbors(frontier, true);
-			
-		}
-		
-		Debug.Log("No cages found. Searched nodes: " + count);
-		return null;
-	}
 }

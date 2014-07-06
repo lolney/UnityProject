@@ -3,9 +3,9 @@ using System.Collections;
 
 public class UpdateText : MonoBehaviour {
 
-	public int cages = 0;
-	public int catCages = 0;
-	public int playerCages = 0;
+	static public int cages = 0;
+	static public int catCages = 0;
+	static public int playerCages = 0;
 	
 	public Transform Player;
 	
