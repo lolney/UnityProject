@@ -28,6 +28,7 @@ public class DestroyCage : MonoBehaviour {
 					Rigidbody2D b = transform.GetChild(c).GetComponent<Rigidbody2D>();
 					b.WakeUp();
 					b.velocity = Random.insideUnitCircle * 50;
+					b.angularVelocity = Random.Range(100, 600);
 				}
 				
 				transform.DetachChildren();
