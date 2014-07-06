@@ -249,8 +249,13 @@ public class MazeGeneration : MonoBehaviour {
 						int rand = (int)Random.Range(0,10);
 						if(rand == 0){
 							GameObject ww = (GameObject)Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);					
-							GameObject cage = (GameObject)Instantiate(GameObject.Find("BambooCage"), loc, Quaternion.identity);
-							ww.transform.parent = cage.transform;
+							GameObject cage = (GameObject)Instantiate(GameObject.Find("Cage"), loc, Quaternion.identity);
+							for(int c=0; c<cage.transform.childCount; c++){
+								Rigidbody2D b = cage.transform.GetChild(c).GetComponent<Rigidbody2D>();
+								b.Sleep();
+							}
+							ww.transform.parent = cage.transform;			
+							
 						}
 							
 					}
