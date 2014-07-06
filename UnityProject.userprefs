@@ -2,19 +2,18 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MazeGeneration.cs">
     <Files>
-      <File FileName="Assets/WeeWeeAI.cs" Line="9" Column="24" />
-      <File FileName="Assets/ThirdPerson.js" Line="1" Column="1" />
-      <File FileName="Assets/SimpleMovementController.cs" Line="1" Column="1" />
-      <File FileName="Assets/SimpleMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets/MazeGeneration.cs" Line="251" Column="44" />
-      <File FileName="Assets/BlendMaterials.cs" Line="1" Column="1" />
-      <File FileName="Assets/PathFinding.cs" Line="30" Column="1" />
+      <File FileName="Assets/WeeWeeAI.cs" Line="84" Column="6" />
+      <File FileName="Assets/SimpleMovementController.cs" Line="125" Column="6" />
+      <File FileName="Assets/MazeGeneration.cs" Line="252" Column="73" />
+      <File FileName="Assets/BlendMaterials.cs" Line="1" Column="5" />
+      <File FileName="Assets/DestroyCage.cs" Line="30" Column="31" />
+      <File FileName="Assets/CatAI.cs" Line="115" Column="4" />
+      <File FileName="Assets/PathFinding.cs" Line="110" Column="5" />
+      <File FileName="Assets/DestroyAfterSeconds.cs" Line="15" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/Luke/UnityProject/Assets/PathFinding.cs" line="17" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

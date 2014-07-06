@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class MazeGeneration : MonoBehaviour {
 	
 
-	public int gridSize = 21;
+	public static int gridSize = 21;
 	private int blockSize = 10;
 	
 	public Transform Player;
@@ -19,6 +19,7 @@ public class MazeGeneration : MonoBehaviour {
 	private PathFinding pfinder;
 
 	void  Start (){
+		float start = Time.time;
 		int[,] grid= new int[gridSize,gridSize];
 		map = new Node[gridSize-1,gridSize-1];
 		
@@ -34,7 +35,7 @@ public class MazeGeneration : MonoBehaviour {
 		createPath();
 		
 		pfinder = new PathFinding();
-		
+		Debug.Log(Time.time - start);
 	}
 	
 	void Update () {
@@ -244,26 +245,36 @@ public class MazeGeneration : MonoBehaviour {
 					if(i != gridSize - 2)
 						map[i,j].right = map[i+1, j];
 				
-				if(map[i,j].findNeigbors().Count == 1){
-					if(map[i,j].down == null){
-						int rand = (int)Random.Range(0,10);
-						if(rand == 0){
-							GameObject ww = (GameObject)Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);					
-							GameObject cage = (GameObject)Instantiate(GameObject.Find("Cage"), loc, Quaternion.identity);
-							for(int c=0; c<cage.transform.childCount; c++){
-								Rigidbody2D b = cage.transform.GetChild(c).GetComponent<Rigidbody2D>();
-								b.Sleep();
-							}
-							ww.transform.parent = cage.transform;			
-							
-						}
-							
+			}
+			
+		GameObject gui = GameObject.Find("GUI Text");
+		UpdateText txt = gui.GetComponent<UpdateText>();
+		
+		for(int i=0; i<gridSize-1; i++)
+		for(int j=0; j<gridSize-1; j++) {	
+			if(map[i,j].findNeigbors().Count == 1)
+			if(map[i,j].down == null){
+			
+				Vector2 loc = map[i,j].center;
+				
+				int rand = (int)Random.Range(0,10);
+				if(rand == 0){
+					GameObject ww = (GameObject)Instantiate(GameObject.Find("Wee Wee NPC"), loc, Quaternion.identity);					
+					GameObject cage = (GameObject)Instantiate(GameObject.Find("Cage"), loc, Quaternion.identity);
+					for(int c=0; c<cage.transform.childCount; c++){
+						Rigidbody2D b = cage.transform.GetChild(c).GetComponent<Rigidbody2D>();
+						b.Sleep();
 					}
+					ww.transform.parent = cage.transform;	
+					map[i,j].cage = true;	
+					txt.cages++;
 				}
 				
 			}
-	}
+			
+		}
 		
+	}	
 }
 
 public class Node : System.IComparable<Node> {
@@ -276,6 +287,8 @@ public class Node : System.IComparable<Node> {
 	
 	public bool start = false;
 	public bool end = false;
+	public bool cage = false;
+	public bool explored = false;
 	
 	public float score = Mathf.Infinity;
 	public float accumulated = Mathf.Infinity;
@@ -286,19 +299,70 @@ public class Node : System.IComparable<Node> {
 		this.end = end;
 	}
 	
-	public Queue<Node> findNeigbors() {
+	public Queue<Node> findNeigbors(bool markExplored = false) {
 		Queue<Node> result = new Queue<Node>();
 		
-		if(up != null)
-			result.Enqueue(up);
-		if(down != null)
-			result.Enqueue(down);
-		if(right != null)
-			result.Enqueue(right);
-		if(left != null)
-			result.Enqueue(left);
-			
+		if(markExplored){
+			if(up != null && !up.explored){
+				result.Enqueue(up);
+				up.explored = true;
+			}
+			if(down != null && !down.explored){
+				result.Enqueue(down);
+				down.explored = true;
+			}
+			if(right != null && !right.explored){
+				result.Enqueue(right);
+				right.explored = true;
+			}
+			if(left != null && !left.explored){
+				result.Enqueue(left);
+				left.explored = true;
+			}
+		} else {
+			if(up != null)
+				result.Enqueue(up);
+			if(down != null)
+				result.Enqueue(down);
+			if(right != null)
+				result.Enqueue(right);
+			if(left != null)
+				result.Enqueue(left);
+		}
+		
 		return result;
+	}
+	
+	public void findNeigbors(Queue<Node> result, bool markExplored = false) {
+		
+		if(markExplored){
+			if(up != null && !up.explored){
+				result.Enqueue(up);
+				up.explored = true;
+			}
+			if(down != null && !down.explored){
+				result.Enqueue(down);
+				down.explored = true;
+			}
+			if(right != null && !right.explored){
+				result.Enqueue(right);
+				right.explored = true;
+			}
+			if(left != null && !left.explored){
+				result.Enqueue(left);
+				left.explored = true;
+			}
+		} else {
+			if(up != null)
+				result.Enqueue(up);
+			if(down != null)
+				result.Enqueue(down);
+			if(right != null)
+				result.Enqueue(right);
+			if(left != null)
+				result.Enqueue(left);
+		}
+		
 	}
 	
 	public float distance(Node n2) {

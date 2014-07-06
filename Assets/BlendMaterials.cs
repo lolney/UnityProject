@@ -7,7 +7,6 @@ public class BlendMaterials : MonoBehaviour {
 	public Texture2D[] textures;
 	
 	public Transform character;
-	public MazeGeneration script;
 	public int transition = 20;
 	
 	private Skybox shader;
@@ -16,7 +15,7 @@ public class BlendMaterials : MonoBehaviour {
 	
 	void  Start () {
 		shader = GetComponent<Skybox>();
-		maxHeight = script.gridSize * 10;
+		maxHeight = MazeGeneration.gridSize * 10;
 		setTextures(0);
 		
 	}

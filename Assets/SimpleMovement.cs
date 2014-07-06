@@ -38,6 +38,10 @@ public class SimpleMovement : MonoBehaviour {
 			controller.jump();
 		}
 		
+		if(Input.GetMouseButtonDown(0)) {
+			fireNote();
+		}
+		
 		if(Input.GetAxis("Vertical") != 0) {
 			controller.fly(axisUp);
 		}
@@ -47,5 +51,11 @@ public class SimpleMovement : MonoBehaviour {
 		return 0;
 			
 	}
-
+	
+	void fireNote() {
+		GameObject note = (GameObject)Instantiate(GameObject.Find("Note1"),transform.position,Quaternion.identity);
+		Vector2 direction = (Vector2)(Input.mousePosition - transform.position);
+		note.rigidbody2D.velocity = direction;
+	
+	}
 }

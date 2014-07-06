@@ -14,7 +14,7 @@ public class PathFinding {
 		
 		map = mg.map;
 		maze = mg.maze;
-		gridSize = mg.gridSize;
+		gridSize = MazeGeneration.gridSize;
 	}
 		
 	public List<Node> A_Star(Node start, Node end) {

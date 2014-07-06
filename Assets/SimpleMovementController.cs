@@ -18,7 +18,9 @@ public class SimpleMovementController {
 		private PathFinding pathfind;
 		private Vector2 destination;
 		private float startTime;
-		private Node end;
+		private Node end = null;
+		
+		private int attempts = 0;
 		
 		public void OnCollisionEnter2D(Collision2D collision  ) {
 			
@@ -86,7 +88,7 @@ public class SimpleMovementController {
 			transform.RotateAroundLocal(new Vector3(0,0,1), angle);
 		}
 		
-		public void initPath(Node start, Node end) {	
+		public void initPath(Node start, Node end) {
 			this.end = end;	
 			pathfind = new PathFinding();
 			path = pathfind.A_Star(start, end);
@@ -95,8 +97,17 @@ public class SimpleMovementController {
 			startTime = Time.time;
 		}
 		
-		public int followPath(){
-		
+		public bool followPath(){
+			
+			BoxCollider2D box = character.GetComponent<BoxCollider2D>();
+			if(Time.time - startTime > .5f)
+				box.enabled = true;
+			
+			if(end == null) {
+				box.enabled = true;
+				return true;
+			}
+			
 			Vector2 current = rigidbody2D.position;
 			
 			colBelow = false;
@@ -104,20 +115,26 @@ public class SimpleMovementController {
 			
 			if(EqualsWithFudge(destination, current)) {
 				if(path.Count == 0) {
-					WeeWeeAI ai = character.GetComponent<WeeWeeAI>();
-					ai.stateOverride = false;
-					ai.current = state.idle;
-					return 1;
+					box.enabled = true;
+					return true;
 				}
 				destination = path[0].center;			
 				path.RemoveAt(0);
-				startTime = Time.time;				
+				startTime = Time.time;	
+				attempts = 0;			
 			}
 			else if(Time.time - startTime > 2f){
 				startTime = Time.time;
+				attempts++;
+				
 				Node start = PathFinding.findClosestNode(transform);
+				if(attempts >= 2){
+					box.enabled = false;
+				}
+				
 				path = pathfind.A_Star(start, end);
 				path.RemoveAt(0);
+				destination = path[0].center;
 				
 				Debug.Log("Rerouting to: " + path[0].center);
 			}
@@ -132,11 +149,12 @@ public class SimpleMovementController {
 			float dot = Vector2.Dot(rigidbody2D.velocity, Vector2.right);
 			if((facingRight &&  dot > 0) || (!facingRight && dot < 0))
 				flip ();
-				
-			return 0;
+						
+			
+			return false;
 			
 		}
-		
+				
 		private bool EqualsWithFudge(Vector2 a, Vector2 b) {
 		
 			if((a.x < (b.x + 2) && a.x > (b.x - 2)) &&

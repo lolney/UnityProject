@@ -78,7 +78,10 @@ public class WeeWeeAI : MonoBehaviour {
 				controller.fly(.25f);
 				break;
 			case state.path:
-				controller.followPath();
+				if(controller.followPath()){
+					stateOverride = false;
+					current = state.idle;
+				}
 				break;
 		} 
 
