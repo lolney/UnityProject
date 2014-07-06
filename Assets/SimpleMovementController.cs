@@ -27,7 +27,7 @@ public class SimpleMovementController {
 				if(Vector3.Dot(collision.contacts[0].normal, Vector3.up) > 0.5f)
 				{
 					colBelow = true;
-					anim.enabled = false;
+					anim.Play("Idle", 0);
 					
 				}
 			}
