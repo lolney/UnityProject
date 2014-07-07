@@ -16,28 +16,29 @@ public class DestroyCage : MonoBehaviour {
 		if(name.Equals("Main Character") || name.StartsWith("Note")) {
 			Debug.Log("Main Char Entered");
 			end = mg.map[MazeGeneration.gridSize - 2, MazeGeneration.gridSize - 2];
-			destroy(end);
-			UpdateText.playerCages++;
-			UpdateText.cages--;
+			if(destroy(end)){
+				UpdateText.playerCages++;
+				UpdateText.cages--;
+			}
 		}
 		else if(name.Equals("Cat")) {
 			Debug.Log("Cat Entered");
 			end = mg.map[0, MazeGeneration.gridSize - 2];
-			destroy(end);
-			UpdateText.catCages++;
-			UpdateText.cages--;
+			if(destroy(end)){
+				UpdateText.catCages++;
+				UpdateText.cages--;
+			}
 		}
 			
 	}
 	
 	
-	private void destroy(Node end) {
+	private bool destroy(Node end) {
 		
-		
-		if(transform.childCount != 0){
-			GameObject WeeWee = transform.GetChild(transform.childCount - 1).gameObject;
+		Transform WeeWee = transform.FindChild("Wee Wee NPC(Clone)");
+		if(WeeWee != null){
 			
-			WeeWeeAI ai = WeeWee.GetComponent<WeeWeeAI>();
+			WeeWeeAI ai = WeeWee.gameObject.GetComponent<WeeWeeAI>();
 			
 			Node start = PathFinding.findClosestNode(WeeWee.transform);
 			start.cage = false;
@@ -58,8 +59,9 @@ public class DestroyCage : MonoBehaviour {
 			
 			transform.DetachChildren();
 			Destroy(gameObject); 
-
+			return true;
 		}
+		else return false;
 	}
 }
 	

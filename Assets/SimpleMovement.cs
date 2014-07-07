@@ -86,7 +86,7 @@ public class SimpleMovement : MonoBehaviour {
 		note.renderer.material.color = color;
 	
 		time = Time.time;
-		DestroyAfterSeconds.Destroy(note, 2);
+		DestroyAfterSeconds.Destroy(note, 1);
 	}
 	
 	 void showHint(){
