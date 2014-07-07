@@ -210,7 +210,9 @@ public class MazeGeneration : MonoBehaviour {
 						map[i,j].right = map[i+1, j];
 				
 			}
-					
+		// Reset cage counts
+		UpdateText.reset();
+			
 		for(int i=0; i<gridSize-1; i++)
 		for(int j=0; j<gridSize-1; j++) {	
 			if(map[i,j].findNeigbors().Count == 1)

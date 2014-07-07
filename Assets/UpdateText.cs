@@ -78,12 +78,12 @@ public class UpdateText : MonoBehaviour {
 			textMesh.text = "Use the mouse\n To fire notes \n At the enemy";
 		}
 		
-		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif)/Mathf.Log(10), .15f);
+		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif + 1)/Mathf.Log(10), .16f);
 	}
 	
 	void showGameOver(float dif){
 		textMesh.transform.localScale = Vector3.one;
-		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif)/Mathf.Log(10), .18f);
+		textMesh.transform.localScale *= Mathf.Min(Mathf.Log(dif + 1)/Mathf.Log(10), .16f);
 		if(catCages > playerCages)
 			textMesh.text = "You have lost!";
 		else if(playerCages > catCages)
@@ -122,5 +122,12 @@ public class UpdateText : MonoBehaviour {
 		for(int i=0; i<fieldsRight.Length; i++)
 			GUI.Box(new Rect(Screen.width - width,y+i*spacing,width-(2*x),textHeight), fieldsRight[i]);
 			
+	}
+	
+	public static void reset() {
+		cages = 0;
+		catCages = 0;
+		playerCages = 0;
+		 hints = 3;
 	}
 }
