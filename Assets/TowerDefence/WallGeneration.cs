@@ -7,6 +7,9 @@ public class WallGeneration : MonoBehaviour {
 	public static int gridSize = 100;
 	public static int inner = -40;
 	
+	public static int outerOpening;
+	public static int innerOpening;
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -17,8 +20,8 @@ public class WallGeneration : MonoBehaviour {
 		int outer = inner - gridSize;
 		
 		// Lower end of door:
-		int outerOpening = (int)Random.Range(bottom, top - doorSize);
-		int innerOpening = (int)Random.Range(bottom, top - doorSize);
+		outerOpening = (int)Random.Range(bottom, top - doorSize);
+		innerOpening = (int)Random.Range(bottom, top - doorSize);
 		
 		if(blockPrefabs.Length > 2)
 			throw new UnityException("Can add no more than 2 types of blocks");

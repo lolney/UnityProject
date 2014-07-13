@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TowerDefence/WallGeneration.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ZoomPanCameraBehavior.cs">
     <Files>
-      <File FileName="Assets/TowerDefence/WallGeneration.cs" Line="26" Column="4" />
-      <File FileName="Assets/MazeGeneration.cs" Line="64" Column="6" />
+      <File FileName="Assets/ZoomPanCameraBehavior.cs" Line="27" Column="15" />
+      <File FileName="Assets/TowerDefence/WallGeneration.cs" Line="7" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
