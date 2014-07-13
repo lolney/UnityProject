@@ -4,27 +4,31 @@ using System.Collections;
 public class WallGeneration : MonoBehaviour {
 
 	public GameObject[] blockPrefabs;
+	public static int gridSize = 100;
+	public static int inner = -40;
 	
 	// Use this for initialization
 	void Start () {
-		
-		int gridSize = 100;
 		
 		int top = gridSize/2;
 		int bottom = -gridSize/2;
 		
 		int doorSize = 10;
-		int inner = -40;
 		int outer = inner - gridSize;
 		
 		// Lower end of door:
 		int outerOpening = (int)Random.Range(bottom, top - doorSize);
 		int innerOpening = (int)Random.Range(bottom, top - doorSize);
 		
-		
+		if(blockPrefabs.Length > 2)
+			throw new UnityException("Can add no more than 2 types of blocks");
+			
 		for(int i=0; i<blockPrefabs.Length; i++){
 		
 			GameObject obj = blockPrefabs[i];
+			
+			inner *= (int)Mathf.Pow(-1, i);
+			outer *= (int)Mathf.Pow(-1, i);
 			
 			// Outer wall:
 			verticalWall(top, outerOpening + doorSize, outer, obj);

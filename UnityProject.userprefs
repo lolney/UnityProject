@@ -1,17 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SimpleMovement.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TowerDefence/WallGeneration.cs">
     <Files>
-      <File FileName="Assets/CameraSize.cs" Line="1" Column="1" />
-      <File FileName="Assets/WeeWeeAI.cs" Line="1" Column="1" />
-      <File FileName="Assets/SimpleMovementController.cs" Line="1" Column="1" />
-      <File FileName="Assets/MazeGeneration.cs" Line="1" Column="1" />
-      <File FileName="Assets/DestroyCage.cs" Line="39" Column="22" />
-      <File FileName="Assets/CatAI.cs" Line="1" Column="1" />
-      <File FileName="Assets/UpdateText.cs" Line="86" Column="83" />
-      <File FileName="Assets/SimpleMovement.cs" Line="89" Column="38" />
-      <File FileName="Assets/PathFinding.cs" Line="1" Column="1" />
-      <File FileName="Assets/ThirdPerson.js" Line="1" Column="1" />
+      <File FileName="Assets/TowerDefence/WallGeneration.cs" Line="26" Column="4" />
+      <File FileName="Assets/MazeGeneration.cs" Line="64" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
