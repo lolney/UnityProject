@@ -40,7 +40,7 @@ public class DestroyCage : MonoBehaviour {
 			
 			WeeWeeAI ai = WeeWee.gameObject.GetComponent<WeeWeeAI>();
 			
-			Node start = PathFinding.findClosestNode(WeeWee.transform);
+			Node start = PathFinding.findClosestNode(WeeWee.transform.position);
 			start.cage = false;
 			Debug.Log("Postion: " + WeeWee.transform.position);
 			Debug.Log("Closest Node: " + start.center);

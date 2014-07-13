@@ -100,7 +100,7 @@ public class SimpleMovement : MonoBehaviour {
 		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
 		
 		Node[,] map = mg.map;
-		Node start = PathFinding.findClosestNode(transform);
+		Node start = PathFinding.findClosestNode(transform.position);
 		Node end = start.findCage(map);
 		if(end == null) 
 			end = map[MazeGeneration.gridSize - 2, MazeGeneration.gridSize - 2];

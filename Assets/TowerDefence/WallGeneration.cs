@@ -19,6 +19,9 @@ public class WallGeneration : MonoBehaviour {
 		int doorSize = 10;
 		int outer = inner - gridSize;
 		
+		LevelProperties.resolution = 2;
+		LevelProperties.origin = new Vector3(outer - 20, bottom - 20);
+		
 		// Lower end of door:
 		outerOpening = (int)Random.Range(bottom, top - doorSize);
 		innerOpening = (int)Random.Range(bottom, top - doorSize);
@@ -73,8 +76,16 @@ public class WallGeneration : MonoBehaviour {
 		wall.transform.localScale = temp;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	void GenerateMap(){
+		
+		int sizeX = (int)Mathf.Ceil(Mathf.Abs(LevelProperties.resolution * LevelProperties.origin.x * 2));
+		int sizeY = (int)Mathf.Ceil(Mathf.Abs(LevelProperties.resolution * LevelProperties.origin.y * 2));
+		
+		Node[,] map = new Node[sizeX,sizeY];
+		
+		for(int i=0; i<sizeX; i++)
+			for(int j=0; j<sizeY; j++){
+			
+			}
 	}
 }

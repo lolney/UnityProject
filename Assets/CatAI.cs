@@ -117,7 +117,7 @@ public class CatAI : MonoBehaviour {
 			break;
 		case state.path:			
 			if(!end.cage || controller.followPath()){
-				Node begin = PathFinding.findClosestNode(transform);
+				Node begin = PathFinding.findClosestNode(transform.position);
 				end = begin.findCage(map);
 				if(end == null){
 					current = state.idle;

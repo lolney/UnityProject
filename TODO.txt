@@ -1,0 +1,8 @@
+Unity goals:
+- Character pathfinding (TODO: generalize findClosestNode)
+
+- Obstacle placement
+- Obstacle behaviors
+- Pathfinding with obstacle placement as a consideration
+
+- Budgeting for obstacle placement

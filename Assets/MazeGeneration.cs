@@ -19,6 +19,7 @@ public class MazeGeneration : MonoBehaviour {
 	private PathFinding pfinder;
 
 	void  Start (){
+		LevelProperties.resolution = 10;
 		float start = Time.time;
 		int[,] grid= new int[gridSize,gridSize];
 		map = new Node[gridSize-1,gridSize-1];
@@ -34,6 +35,8 @@ public class MazeGeneration : MonoBehaviour {
 		createSprites(maze);
 		createPath();
 		
+		LevelProperties.map = map;
+		
 		pfinder = new PathFinding();
 		Debug.Log(Time.time - start);
 	}
@@ -41,6 +44,8 @@ public class MazeGeneration : MonoBehaviour {
 	void createSprites(List<Vector2>[,] maze) {
 		int jj = 0;
 		pos = Player.position;
+		LevelProperties.origin = pos;
+		
 		for(int a= 0; a < blockPrefabs.Length; a++) {	// Types of block prefabs
 			int limit = (a + 1) * (int)(gridSize / blockPrefabs.Length);
 			for (int j = jj; j < limit; j++, jj++)			// Segmented along y axis
@@ -366,6 +371,51 @@ public class Node : System.IComparable<Node> {
 	
 	public bool Equals(Node a) {
 		return center.Equals(a.center);
+	}
+	
+}
+
+public class Node8D : Node {
+
+	public Node up_right = null;
+	public Node down_right = null;
+	public Node up_left = null;
+	public Node down_left = null;
+	
+	public Node8D(Vector2 center, bool start = false, bool end = false) : base(center, start, end) {}
+	
+	public Queue<Node> findNeigbors(bool markExplored = false) {
+		Queue<Node> result = base.findNeigbors(markExplored);
+		
+		if(markExplored){
+			if(up_right != null && !up_right.explored){
+				result.Enqueue(up_right);
+				up_right.explored = true;
+			}
+			if(down_right != null && !down_right.explored){
+				result.Enqueue(down_right);
+				down_right.explored = true;
+			}
+			if(up_left != null && !up_left.explored){
+				result.Enqueue(up_left);
+				up_left.explored = true;
+			}
+			if(down_left != null && !down_left.explored){
+				result.Enqueue(down_left);
+				down_left.explored = true;
+			}
+		} else {
+			if(up_right != null)
+				result.Enqueue(up_right);
+			if(down_right != null)
+				result.Enqueue(down_right);
+			if(up_left != null)
+				result.Enqueue(up_left);
+			if(down_left != null)
+				result.Enqueue(down_left);
+		}
+		
+		return result;
 	}
 	
 }

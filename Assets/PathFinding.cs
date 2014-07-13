@@ -87,32 +87,32 @@ public class PathFinding {
 		
 	}
 	
-	public static Node findClosestNode(Transform obj) {
+	public static Node findClosestNode(Vector3 position) {
 		
-		GameObject scripts = GameObject.Find("Scripts");
-		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
-		Vector3 mazePos = mg.pos;
-		Node[,] map = mg.map;
+		Vector3 mazePos = LevelProperties.origin;
+		Node[,] map = LevelProperties.map;
 		
-		int yPos = (int)(obj.position.y - (mazePos.y + 5));
-		int xPos = (int)(obj.position.x - (mazePos.x + 5));
+		int s = LevelProperties.resolution;
 		
-		int y = yPos % 10;
-		int x = xPos % 10;
+		int yPos = (int)(position.y - (mazePos.y + s/2));
+		int xPos = (int)(position.x - (mazePos.x + s/2));
+		
+		int y = yPos % s;
+		int x = xPos % s;
 		yPos -= y;
 		xPos -= x;
 		 
-		if(x >= 5) x = 10;
-		if(x < 5) x = 0;
-		if(y >= 5) y = 10;
-		if(y < 5) y = 0;
+		if(x >= s/2) x = s;
+		if(x < s/2) x = 0;
+		if(y >= s/2) y = s;
+		if(y < s/2) y = 0;
 		
 		yPos += y;
 		xPos += x;
 		
 		Debug.Log(xPos + " " + yPos);
-		yPos /= 10;
-		xPos /= 10;
+		yPos /= s;
+		xPos /= s;
 		Debug.Log(xPos + " " + yPos);
 		
 		if(xPos < 0) xPos = 0;

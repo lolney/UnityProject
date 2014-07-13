@@ -127,7 +127,7 @@ public class SimpleMovementController {
 				startTime = Time.time;
 				attempts++;
 				
-				Node start = PathFinding.findClosestNode(transform);
+				Node start = PathFinding.findClosestNode(transform.position);
 				if(attempts >= 2){
 					box.enabled = false;
 				}
