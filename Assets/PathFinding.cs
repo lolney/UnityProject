@@ -3,18 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PathFinding {
+			
+	public static List<Node> A_Star(Node start, Node end) {
 	
-	public Node[,] map;
-	private int gridSizeX;
-	private int gridSizeY;
-		
-	public PathFinding () {		
-		map = LevelProperties.map;
-		gridSizeX = LevelProperties.sizeX;
-		gridSizeY = LevelProperties.sizeY;
-	}
-		
-	public List<Node> A_Star(Node start, Node end) {
+		Node[,] map = LevelProperties.map;
+		int gridSizeX = LevelProperties.sizeX;
+		int gridSizeY = LevelProperties.sizeY;
 				
 		Queue<Node> neighbors = new Queue<Node>(); 
 		BHeap<Node> considered = new BHeap<Node>();
@@ -65,7 +59,7 @@ public class PathFinding {
 		return new List<Node>();
 	}
 	
-	List<Node> constructPath(Dictionary<Node, Node> navigated, Node current) {
+	static List<Node> constructPath(Dictionary<Node, Node> navigated, Node current) {
 		Node previous;
 		List<Node> path;
 		

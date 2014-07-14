@@ -40,7 +40,14 @@ public class SimpleMovement : MonoBehaviour {
 		// Show hint
 		
 		if(Input.GetKeyDown(KeyCode.M))
-			if(UpdateText.hints > 0) showHint();
+		if(UpdateText.hints > 0) {
+			Node[,] map = LevelProperties.map;
+			Node start = PathFinding.findClosestNode(transform.position);
+			Node end = start.findCage(map);
+			if(end == null) 
+				end = map[MazeGeneration.gridSize - 2, MazeGeneration.gridSize - 2];
+			showHint(start, end, arrows);
+		}
 						
 		// Move
 		controller.move(axis);
@@ -89,24 +96,15 @@ public class SimpleMovement : MonoBehaviour {
 		DestroyAfterSeconds.Destroy(note, 1);
 	}
 	
-	 void showHint(){
+	public static List<Node> showHint(Node start, Node end, List<GameObject> arrows){
 		
 		UpdateText.hints--;
 		foreach(GameObject obj in arrows)
 			Destroy(obj);
 		
-		PathFinding pfinder = new PathFinding();
-		GameObject scripts = GameObject.Find("Scripts");
-		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
-		
-		Node[,] map = mg.map;
-		Node start = PathFinding.findClosestNode(transform.position);
-		Node end = start.findCage(map);
-		if(end == null) 
-			end = map[MazeGeneration.gridSize - 2, MazeGeneration.gridSize - 2];
-		
-		List<Node> path = pfinder.A_Star(start, end);
-		
+		List<Node> path = PathFinding.A_Star(start, end);
+		List<Node> result = new List<Node>();
+						
 		Node next;
 		while(path.Count != 0) {
 			Node current = path[0];
@@ -114,7 +112,10 @@ public class SimpleMovement : MonoBehaviour {
 				next = path[1];
 			else 
 				next = end;
+				
+			result.Add(path[0]);
 			path.RemoveAt(0);
+			
 			
 			Quaternion rotation = Quaternion.identity; 
 			
@@ -131,7 +132,10 @@ public class SimpleMovement : MonoBehaviour {
 					rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
 			}
 			
-			arrows.Add((GameObject)Instantiate(GameObject.Find("Arrow"), current.center, rotation));
+			GameObject arr = (GameObject)Instantiate(GameObject.Find("Arrow"), current.center, rotation);
+			arrows.Add(arr);
 		}
+		
+		return result;
 	}
 }

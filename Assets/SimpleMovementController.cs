@@ -21,6 +21,7 @@ public class SimpleMovementController {
 		private Node end = null;
 		
 		private int attempts = 0;
+		private List<GameObject> arrows;
 		
 		public void OnCollisionEnter2D(Collision2D collision  ) {
 			
@@ -45,6 +46,8 @@ public class SimpleMovementController {
 			
 			this.Speed = Speed;
 			this.JumpPower = JumpPower;
+			
+			arrows = new List<GameObject>();
 		}
 		
 		public void  move ( float movementAxis  ){
@@ -90,8 +93,7 @@ public class SimpleMovementController {
 		
 		public void initPath(Node start, Node end) {
 			this.end = end;	
-			pathfind = new PathFinding();
-			path = pathfind.A_Star(start, end);
+			path = SimpleMovement.showHint(start, end, arrows);
 			Debug.Log(path.Count);
 			rigidbody2D.velocity = Vector2.zero;
 			destination = path[0];
@@ -133,7 +135,7 @@ public class SimpleMovementController {
 					box.enabled = false;
 				}
 				
-				path = pathfind.A_Star(start, end);
+				path = PathFinding.A_Star(start, end);
 				path.RemoveAt(0);
 				destination = path[0];
 				

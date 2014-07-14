@@ -269,6 +269,11 @@ public class Node : System.IComparable<Node> {
 		this.end = end;
 	}
 	
+	public float calcScoreIncrease() {
+		return (float)LevelProperties.resolution * slowModifier;
+	}
+	
+	
 	public Node findCage(Node[,] map) {
 		
 		Node current = this;
@@ -294,11 +299,7 @@ public class Node : System.IComparable<Node> {
 		Debug.Log("No cages found. Searched nodes: " + count);
 		return null;
 	}
-	
-	public float calcScoreIncrease(){
-		return (float)LevelProperties.resolution;
-	}
-	
+		
 	public Queue<Node> findNeigbors(bool markExplored = false) {
 		Queue<Node> result = new Queue<Node>();
 		
@@ -389,11 +390,7 @@ public class Node8D : Node {
 	public Node down_left = null;
 	
 	public Node8D(Vector2 center, bool start = false, bool end = false) : base(center, start, end) {}
-	
-	public float calcScoreIncrease() {
-		return base.calcScoreIncrease() * base.slowModifier;
-	}
-	
+		
 	public Queue<Node> findNeigbors(bool markExplored = false) {
 		Queue<Node> result = base.findNeigbors(markExplored);
 		

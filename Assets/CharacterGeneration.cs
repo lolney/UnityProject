@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterGeneration : MonoBehaviour {
 	
@@ -9,6 +10,7 @@ public class CharacterGeneration : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		lastTime = Time.time;
+		LevelProperties.minions = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -22,7 +24,7 @@ public class CharacterGeneration : MonoBehaviour {
 				inner *= (int)Mathf.Pow(-1, i);
 				Vector3 position = new Vector3(inner, WallGeneration.innerOpening + 4);
 				
-				Instantiate(prefabs[i], position, Quaternion.identity);
+				LevelProperties.minions.Add((GameObject)Instantiate(prefabs[i], position, Quaternion.identity));
 			}
 			
 			lastTime = Time.time;
