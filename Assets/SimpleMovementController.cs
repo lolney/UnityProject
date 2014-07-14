@@ -92,6 +92,7 @@ public class SimpleMovementController {
 			this.end = end;	
 			pathfind = new PathFinding();
 			path = pathfind.A_Star(start, end);
+			Debug.Log(path.Count);
 			rigidbody2D.velocity = Vector2.zero;
 			destination = path[0].center;
 			startTime = Time.time;

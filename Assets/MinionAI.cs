@@ -4,6 +4,7 @@ using System.Collections;
 public class MinionAI : MonoBehaviour {
 
 	private SimpleMovementController controller;
+	public GameObject prefab;
 	
 	public float speed = 12.0f;
 	public state current;
@@ -17,10 +18,19 @@ public class MinionAI : MonoBehaviour {
 		// TODO: Generalize Pathfinding for current grid 
 		
 		Node start = PathFinding.findClosestNode(transform.position);
-		Node end = PathFinding.findClosestNode(new Vector3(WallGeneration.innerOpening - WallGeneration.gridSize,
-											WallGeneration.outerOpening));
+		int x;
+		if(transform.position.x > 0)
+			x = -1;
+		else x = 1;
+		Node end = PathFinding.findClosestNode(new Vector3(140 * x,
+											WallGeneration.outerOpening + 5));
+											
+		Instantiate(prefab, end.center, Quaternion.identity);
+		Instantiate(prefab, start.center, Quaternion.identity);
 		
+		float t = Time.time;
 		controller.initPath(start, end); 
+		Debug.Log(Time.time - t);
 	}
 	
 	// Update is called once per frame

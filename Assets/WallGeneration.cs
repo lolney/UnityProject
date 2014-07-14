@@ -84,8 +84,8 @@ public class WallGeneration : MonoBehaviour {
 	
 	void GenerateMap(){
 		
-		int sizeX = (int)Mathf.Ceil(Mathf.Abs(LevelProperties.resolution * LevelProperties.origin.x * 2));
-		int sizeY = (int)Mathf.Ceil(Mathf.Abs(LevelProperties.resolution * LevelProperties.origin.y * 2));
+		int sizeX = (int)Mathf.Ceil(Mathf.Abs(LevelProperties.origin.x * 2 / LevelProperties.resolution));
+		int sizeY = (int)Mathf.Ceil(Mathf.Abs(LevelProperties.origin.y * 2 / LevelProperties.resolution));
 		
 		LevelProperties.sizeX = sizeX;
 		LevelProperties.sizeY = sizeY;
@@ -101,40 +101,69 @@ public class WallGeneration : MonoBehaviour {
 			map[i,j] = new Node8D(center);
 		}
 		
-		for(int i=0; i<gridSize-1; i++)
-		for(int j=0; j<gridSize-1; j++) {
+		for(int i=0; i<sizeX; i++)
+		for(int j=0; j<sizeY; j++) {
 			Vector2 loc = map[i,j].center;
+			int rand = 1;//(int)Random.Range(0, 2);
 			
 			if(!Physics2D.Raycast(loc, Vector2.up, (blockSize * 1.1f)))
-				if(j != sizeY - 1)
+				if(j != sizeY - 1){
 					map[i,j].up = map[i, j+1];
-			
+					if(rand == 0) createArrow(map[i,j], Mathf.Deg2Rad * 90);
+			}
 			if(!Physics2D.Raycast(loc, -Vector2.up, (blockSize * 1.1f)))
-				if(j != 0)
+				if(j != 0){
 					map[i,j].down = map[i, j-1];
+				if(rand == 0) createArrow(map[i,j], Mathf.Deg2Rad * -90);
+					}
 			
 			if(!Physics2D.Raycast(loc, -Vector2.right, (blockSize * 1.1f)))
-				if(i != 0)
-					map[i,j].left = map[i-1, j];
+				if(i != 0){
+				map[i,j].left = map[i-1, j];
+				if(rand == 0)createArrow(map[i,j], Mathf.Deg2Rad * 180);
+			}
 			
 			if(!Physics2D.Raycast(loc, Vector2.right, (blockSize * 1.1f)))
-				if(i != sizeX - 1)
-					map[i,j].right = map[i+1, j];
+				if(i != sizeX - 1){
+					map[i,j].right = map[i+1, j];	
+				if(rand == 0)createArrow(map[i,j], 0);
+				}
 			
-		   if(map[i,j].right != null && map[i,j].up != null)
+		   if(map[i,j].right != null && map[i,j].up != null){
 		   		map[i,j].up_right = map[i+1, j+1];
+			
+				if(rand == 0)createArrow(map[i,j], Mathf.Deg2Rad *45);
+		}
 	   		
-		   if(map[i,j].left != null && map[i,j].up != null)
+		   if(map[i,j].left != null && map[i,j].up != null){
 			   map[i,j].up_left = map[i-1, j+1];
+				
+				if(rand == 0)createArrow(map[i,j], Mathf.Deg2Rad * 90+45);
+			}
 			   
-			if(map[i,j].right != null && map[i,j].down != null)
+			   
+			if(map[i,j].right != null && map[i,j].down != null){
 			   map[i,j].down_right = map[i+1, j-1];
+			
+				if(rand == 0)createArrow(map[i,j], Mathf.Deg2Rad * -45);
+		}
 			   
-			if(map[i,j].left != null && map[i,j].down != null)
+			if(map[i,j].left != null && map[i,j].down != null){
 			   map[i,j].down_left = map[i-1, j-1];
+			
+				if(rand == 0)createArrow(map[i,j], Mathf.Deg2Rad * 180+45);
+		}
 		   	
 		}
 		
 		LevelProperties.map = map;
+	}
+	
+	void createArrow(Node current, float rad){
+		rad *= Mathf.Rad2Deg;
+		Quaternion rotation = Quaternion.AngleAxis(rad, new Vector3(0,0,1));
+		GameObject arr = (GameObject)Instantiate(GameObject.Find("Arrow"), current.center, rotation);
+		
+		arr.transform.localScale /= 10;
 	}
 }

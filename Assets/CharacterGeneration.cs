@@ -13,14 +13,14 @@ public class CharacterGeneration : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// Generate a character every 2 seconds
-		if(Time.time - lastTime > 2){
+		// Generate a character every 5 seconds
+		if(Time.time - lastTime > 5){
 
 			for(int i=0; i<prefabs.Length; i++){
 			
 				int inner = WallGeneration.inner;
 				inner *= (int)Mathf.Pow(-1, i);
-				Vector3 position = new Vector3(inner, WallGeneration.innerOpening + 2);
+				Vector3 position = new Vector3(inner, WallGeneration.innerOpening + 4);
 				
 				Instantiate(prefabs[i], position, Quaternion.identity);
 			}

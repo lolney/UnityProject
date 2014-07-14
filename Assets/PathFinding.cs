@@ -40,6 +40,7 @@ public class PathFinding {
 			
 			neighbors = current.findNeigbors();
 			Node neighbor;
+			
 			while(neighbors.Count != 0) {
 				
 				neighbor = neighbors.Dequeue();
@@ -107,10 +108,10 @@ public class PathFinding {
 		yPos += y;
 		xPos += x;
 		
-		Debug.Log(xPos + " " + yPos);
+//		Debug.Log(xPos + " " + yPos);
 		yPos /= s;
 		xPos /= s;
-		Debug.Log(xPos + " " + yPos);
+//		Debug.Log(xPos + " " + yPos);
 		
 		if(xPos < 0) xPos = 0;
 		if(yPos < 0) yPos = 0;

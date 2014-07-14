@@ -59,8 +59,8 @@
      <Compile Include="Assets\PathFinding.cs" />
      <Compile Include="Assets\SimpleMovement.cs" />
      <Compile Include="Assets\SimpleMovementController.cs" />
-     <Compile Include="Assets\TowerDefence\WallGeneration.cs" />
      <Compile Include="Assets\UpdateText.cs" />
+     <Compile Include="Assets\WallGeneration.cs" />
      <Compile Include="Assets\WeeWeeAI.cs" />
      <Compile Include="Assets\ZoomPanCameraBehavior.cs" />
      <None Include="Assets\NewShader.shader" />
