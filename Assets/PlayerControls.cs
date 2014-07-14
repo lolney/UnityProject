@@ -11,6 +11,7 @@ public class PlayerControls : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () {
+		
 		//GameObject.Find("Quad").transform.localScale = new Vector3(2*LevelProperties.sizeX, 2*LevelProperties.sizeY);
 		if(Input.GetMouseButtonDown(1)) {
 			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -45,7 +46,7 @@ public class PlayerControls : MonoBehaviour {
 		for(int i=0; i<LevelProperties.sizeX*2; i++)
 		for(int j=0; j<LevelProperties.sizeY*2; j++){
 			float slow = LevelProperties.map[i/LevelProperties.resolution, j/LevelProperties.resolution].slowModifier;
-			Color c = new Color(0, (slow - 1)/20, 0);
+			Color c = new Color(0, (slow - 1)/50, (slow - 1)/50);
 			if(c.a > 0) c.a = 1;
 			else c.a = 0;
 			tex.SetPixel(i,j,c);
