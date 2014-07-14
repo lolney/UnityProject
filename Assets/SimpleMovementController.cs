@@ -93,7 +93,7 @@ public class SimpleMovementController {
 		
 		public void initPath(Node start, Node end) {
 			this.end = end;	
-			path = SimpleMovement.showHint(start, end, arrows);
+			path = PathFinding.showHint(start, end, arrows);
 			Debug.Log(path.Count);
 			rigidbody2D.velocity = Vector2.zero;
 			destination = path[0];
@@ -135,7 +135,7 @@ public class SimpleMovementController {
 					box.enabled = false;
 				}
 				
-				path = SimpleMovement.showHint(start, end, arrows);
+				path = PathFinding.showHint(start, end, arrows);
 				path.RemoveAt(0);
 				destination = path[0];
 				

@@ -77,6 +77,62 @@ public class PathFinding {
 		
 	}
 	
+	public static List<Node> showHint(Node start, Node end, List<GameObject> arrows){
+		
+		foreach(GameObject obj in arrows)
+			GameObject.Destroy(obj);
+		arrows.Clear();
+		
+		List<Node> path = PathFinding.A_Star(start, end);
+		List<Node> result = new List<Node>();
+		
+		Node next;
+		while(path.Count != 0) {
+			Node current = path[0];
+			if(path.Count != 1)
+				next = path[1];
+			else 
+				next = end;
+			
+			result.Add(path[0]);
+			path.RemoveAt(0);
+			
+			
+			Quaternion rotation = Quaternion.identity; 
+			if((next.center.x - current.center.x) != 0 && (next.center.y - current.center.y != 0)){
+				if(next.center.y > current.center.y){	// Adjacent vertex is above
+					if(next.center.x > current.center.x)	// Adjacent vertex to the right
+						rotation = Quaternion.AngleAxis(45, new Vector3(0,0,1));
+					else
+						rotation = Quaternion.AngleAxis(90+45, new Vector3(0,0,1));
+				}
+				else {
+					if(next.center.x > current.center.x)	// Adjacent vertex to the right
+						rotation = Quaternion.AngleAxis(-45, new Vector3(0,0,1));
+					else
+						rotation = Quaternion.AngleAxis(180+45, new Vector3(0,0,1));
+				}
+			}
+			else if((next.center.x - current.center.x) == 0){	// Vertical bar
+				if(next.center.y > current.center.y)	// Adjacent vertex is above
+					rotation = Quaternion.AngleAxis(90, new Vector3(0,0,1));
+				else 
+					rotation = Quaternion.AngleAxis(270, new Vector3(0,0,1));
+			}
+			else if(next.center.y - current.center.y == 0){	// Horizontal bar
+				if(next.center.x > current.center.x)	// Adjacent vertex to the right
+					rotation = Quaternion.identity;
+				else
+					rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
+			}
+			
+			GameObject arr = (GameObject)GameObject.Instantiate(GameObject.Find("Arrow"), current.center, rotation);
+			arrows.Add(arr);
+		}
+		
+		return result;
+	}
+	
 	public static Node findClosestNode(Vector3 position) {
 		
 		Vector3 mazePos = LevelProperties.origin;

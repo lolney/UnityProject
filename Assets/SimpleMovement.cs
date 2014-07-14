@@ -41,12 +41,15 @@ public class SimpleMovement : MonoBehaviour {
 		
 		if(Input.GetKeyDown(KeyCode.M))
 		if(UpdateText.hints > 0) {
+			UpdateText.hints--;
+			
 			Node[,] map = LevelProperties.map;
 			Node start = PathFinding.findClosestNode(transform.position);
 			Node end = start.findCage(map);
 			if(end == null) 
 				end = map[MazeGeneration.gridSize - 2, MazeGeneration.gridSize - 2];
-			showHint(start, end, arrows);
+				
+			PathFinding.showHint(start, end, arrows);
 		}
 						
 		// Move
@@ -96,60 +99,4 @@ public class SimpleMovement : MonoBehaviour {
 		DestroyAfterSeconds.Destroy(note, 1);
 	}
 	
-	public static List<Node> showHint(Node start, Node end, List<GameObject> arrows){
-		
-		UpdateText.hints--;
-		foreach(GameObject obj in arrows)
-			Destroy(obj);
-		arrows.Clear();
-		
-		List<Node> path = PathFinding.A_Star(start, end);
-		List<Node> result = new List<Node>();
-						
-		Node next;
-		while(path.Count != 0) {
-			Node current = path[0];
-			if(path.Count != 1)
-				next = path[1];
-			else 
-				next = end;
-				
-			result.Add(path[0]);
-			path.RemoveAt(0);
-			
-			
-			Quaternion rotation = Quaternion.identity; 
-			if((next.center.x - current.center.x) != 0 && (next.center.y - current.center.y != 0)){
-				if(next.center.y > current.center.y){	// Adjacent vertex is above
-					if(next.center.x > current.center.x)	// Adjacent vertex to the right
-						rotation = Quaternion.AngleAxis(45, new Vector3(0,0,1));
-					else
-						rotation = Quaternion.AngleAxis(90+45, new Vector3(0,0,1));
-				}
-				else {
-					if(next.center.x > current.center.x)	// Adjacent vertex to the right
-						rotation = Quaternion.AngleAxis(-45, new Vector3(0,0,1));
-					else
-						rotation = Quaternion.AngleAxis(180+45, new Vector3(0,0,1));
-				}
-			}
-			else if((next.center.x - current.center.x) == 0){	// Vertical bar
-				if(next.center.y > current.center.y)	// Adjacent vertex is above
-					rotation = Quaternion.AngleAxis(90, new Vector3(0,0,1));
-				else 
-					rotation = Quaternion.AngleAxis(270, new Vector3(0,0,1));
-			}
-			else if(next.center.y - current.center.y == 0){	// Horizontal bar
-				if(next.center.x > current.center.x)	// Adjacent vertex to the right
-					rotation = Quaternion.identity;
-				else
-					rotation = Quaternion.AngleAxis(180, new Vector3(0,0,1));
-			}
-			
-			GameObject arr = (GameObject)Instantiate(GameObject.Find("Arrow"), current.center, rotation);
-			arrows.Add(arr);
-		}
-		
-		return result;
-	}
 }

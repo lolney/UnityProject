@@ -49,6 +49,7 @@
      <Compile Include="Assets\Pathfinding.js" />
      <Compile Include="Assets\ThirdPerson.js" />
      <None Include="Assets\NewShader.shader" />
+     <None Include="Assets\MusicBoxGroundEffects.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

@@ -56,7 +56,12 @@ public class WallGeneration : MonoBehaviour {
 			
 			// Lower:
 			horizontalWall(inner, outer, bottom, obj);
+			
 		}
+		
+		// Middle barriers:
+		horizontalWall(inner, -inner, bottom, blockPrefabs[0]);
+		horizontalWall(inner, -inner, top, blockPrefabs[0]);
 	}
 	
 	void verticalWall(int top, int bottom, int x, GameObject obj){

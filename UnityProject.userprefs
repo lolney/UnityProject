@@ -1,20 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MazeGeneration.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Temp/GeneratedFromSurface-Music box ground effects.shader">
     <Files>
-      <File FileName="Assets/CharacterGeneration.cs" Line="1" Column="1" />
-      <File FileName="Assets/WallGeneration.cs" Line="107" Column="17" />
-      <File FileName="Assets/MinionAI.cs" Line="25" Column="12" />
+      <File FileName="Assets/CharacterGeneration.cs" Line="18" Column="42" />
+      <File FileName="Assets/WallGeneration.cs" Line="1" Column="1" />
+      <File FileName="Assets/MinionAI.cs" Line="1" Column="1" />
       <File FileName="Assets/ZoomPanCameraBehavior.cs" Line="1" Column="1" />
-      <File FileName="Assets/SimpleMovementController.cs" Line="148" Column="60" />
-      <File FileName="Assets/PathFinding.cs" Line="18" Column="3" />
-      <File FileName="Assets/MazeGeneration.cs" Line="394" Column="54" />
+      <File FileName="Assets/PathFinding.cs" Line="1" Column="1" />
+      <File FileName="Assets/MazeGeneration.cs" Line="1" Column="1" />
+      <File FileName="Assets/PlayerControls.cs" Line="1" Column="1" />
+      <File FileName="Assets/LevelProperties.cs" Line="1" Column="1" />
+      <File FileName="Assets/SimpleMovementController.cs" Line="1" Column="1" />
+      <File FileName="Assets/SimpleMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets/Player.cs" Line="3" Column="33" />
+      <File FileName="Temp/GeneratedFromSurface-Music box ground effects.shader" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/Luke/UnityProject/Assets/PathFinding.cs" line="95" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

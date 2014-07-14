@@ -1,4 +1,20 @@
 Unity goals:
 - Correct cost for diagonals
-- Put barriers around 
 - Budgeting for obstacle placement
+	- Stages?
+	- Different effects (e.g., speeding your own minions?)
+	- Smaller radius, but more expensive, obstacles
+
+- Better organization for players (i.e., a player class)
+
+_ Music box effects
+	- Circle object with custom shader
+	- Shader that map as argument?
+
+- AI box placement
+	- Genetic algorithm for deciding box placement
+
+_ traffic models
+	- Proper Collision handing
+	- Rerouting out of high traffic areas
+	- Traffic AI ? (i.e., reactions to others)
