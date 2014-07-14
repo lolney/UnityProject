@@ -5,16 +5,13 @@ using System.Collections.Generic;
 public class PathFinding {
 	
 	public Node[,] map;
-	private List<Vector2>[,] maze;
-	private int gridSize;
+	private int gridSizeX;
+	private int gridSizeY;
 		
-	public PathFinding () {
-		GameObject scripts = GameObject.Find("Scripts");
-		MazeGeneration mg = scripts.GetComponent<MazeGeneration>();
-		
-		map = mg.map;
-		maze = mg.maze;
-		gridSize = MazeGeneration.gridSize;
+	public PathFinding () {		
+		map = LevelProperties.map;
+		gridSizeX = LevelProperties.sizeX;
+		gridSizeY = LevelProperties.sizeY;
 	}
 		
 	public List<Node> A_Star(Node start, Node end) {
@@ -25,8 +22,8 @@ public class PathFinding {
 		BHeap<Node> considered = new BHeap<Node>();
 		Dictionary<Node, Node> navigated = new Dictionary<Node, Node>();
 		
-		for(int i=0; i< gridSize - 1;i++)
-		for(int j=0; j< gridSize - 1;j++){
+		for(int i=0; i< gridSizeX - 1;i++)
+		for(int j=0; j< gridSizeY - 1;j++){
 			map[i,j].accumulated = Mathf.Infinity;
 			map[i,j].score = Mathf.Infinity;
 		}

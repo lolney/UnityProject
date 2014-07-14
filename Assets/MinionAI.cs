@@ -15,16 +15,16 @@ public class MinionAI : MonoBehaviour {
 		current = state.path;
 		
 		// TODO: Generalize Pathfinding for current grid 
-		/*
-		Node begin = PathFinding.findClosestNode(transform.position);
+		
+		Node start = PathFinding.findClosestNode(transform.position);
 		Node end = PathFinding.findClosestNode(new Vector3(WallGeneration.innerOpening - WallGeneration.gridSize,
 											WallGeneration.outerOpening));
 		
-		controller.initPath(start, end); */
+		controller.initPath(start, end); 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		controller.followPath();
 	}
 }

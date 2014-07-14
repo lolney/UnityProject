@@ -20,7 +20,7 @@ public class CharacterGeneration : MonoBehaviour {
 			
 				int inner = WallGeneration.inner;
 				inner *= (int)Mathf.Pow(-1, i);
-				Vector3 position = new Vector3(inner, WallGeneration.innerOpening);
+				Vector3 position = new Vector3(inner, WallGeneration.innerOpening + 2);
 				
 				Instantiate(prefabs[i], position, Quaternion.identity);
 			}
