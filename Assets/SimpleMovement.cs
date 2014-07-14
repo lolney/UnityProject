@@ -101,6 +101,7 @@ public class SimpleMovement : MonoBehaviour {
 		UpdateText.hints--;
 		foreach(GameObject obj in arrows)
 			Destroy(obj);
+		arrows.Clear();
 		
 		List<Node> path = PathFinding.A_Star(start, end);
 		List<Node> result = new List<Node>();
@@ -118,14 +119,27 @@ public class SimpleMovement : MonoBehaviour {
 			
 			
 			Quaternion rotation = Quaternion.identity; 
-			
-			if((next.center.x - current.center.x) == 0){	// Vertical bar
+			if((next.center.x - current.center.x) != 0 && (next.center.y - current.center.y != 0)){
+				if(next.center.y > current.center.y){	// Adjacent vertex is above
+					if(next.center.x > current.center.x)	// Adjacent vertex to the right
+						rotation = Quaternion.AngleAxis(45, new Vector3(0,0,1));
+					else
+						rotation = Quaternion.AngleAxis(90+45, new Vector3(0,0,1));
+				}
+				else {
+					if(next.center.x > current.center.x)	// Adjacent vertex to the right
+						rotation = Quaternion.AngleAxis(-45, new Vector3(0,0,1));
+					else
+						rotation = Quaternion.AngleAxis(180+45, new Vector3(0,0,1));
+				}
+			}
+			else if((next.center.x - current.center.x) == 0){	// Vertical bar
 				if(next.center.y > current.center.y)	// Adjacent vertex is above
 					rotation = Quaternion.AngleAxis(90, new Vector3(0,0,1));
 				else 
 					rotation = Quaternion.AngleAxis(270, new Vector3(0,0,1));
 			}
-			if(next.center.y - current.center.y == 0){	// Horizontal bar
+			else if(next.center.y - current.center.y == 0){	// Horizontal bar
 				if(next.center.x > current.center.x)	// Adjacent vertex to the right
 					rotation = Quaternion.identity;
 				else

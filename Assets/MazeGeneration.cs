@@ -300,7 +300,7 @@ public class Node : System.IComparable<Node> {
 		return null;
 	}
 		
-	public Queue<Node> findNeigbors(bool markExplored = false) {
+	public virtual Queue<Node> findNeigbors(bool markExplored = false) {
 		Queue<Node> result = new Queue<Node>();
 		
 		if(markExplored){
@@ -334,7 +334,7 @@ public class Node : System.IComparable<Node> {
 		return result;
 	}
 	
-	public void findNeigbors(Queue<Node> result, bool markExplored = false) {
+	public virtual void findNeigbors(Queue<Node> result, bool markExplored = false) {
 		
 		if(markExplored){
 			if(up != null && !up.explored){
@@ -391,7 +391,7 @@ public class Node8D : Node {
 	
 	public Node8D(Vector2 center, bool start = false, bool end = false) : base(center, start, end) {}
 		
-	public Queue<Node> findNeigbors(bool markExplored = false) {
+	public override Queue<Node> findNeigbors(bool markExplored = false) {
 		Queue<Node> result = base.findNeigbors(markExplored);
 		
 		if(markExplored){
@@ -425,7 +425,7 @@ public class Node8D : Node {
 		return result;
 	}
 	
-	public void findNeigbors(Queue<Node> result, bool markExplored = false) {
+	public override void findNeigbors(Queue<Node> result, bool markExplored = false) {
 		base.findNeigbors(result, markExplored);
 		
 		if(markExplored){

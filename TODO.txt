@@ -1,7 +1,4 @@
 Unity goals:
-- Obstacle behaviors
-- Pathfinding with obstacle placement as a consideration
-	- Send a message to ever game object indicating 
-	- http://docs.unity3d.com/ScriptReference/GameObject.SendMessage.html
-
+- Correct cost for diagonals
+- Put barriers around 
 - Budgeting for obstacle placement

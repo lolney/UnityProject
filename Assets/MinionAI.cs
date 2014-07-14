@@ -40,8 +40,11 @@ public class MinionAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(controller.followPath())
+		if(controller.followPath()){
+			controller.destroyArrows();
+			LevelProperties.minions.Remove(gameObject);
 			Destroy(gameObject);
+		}
 	}
 	
 	void reroute(species s) {

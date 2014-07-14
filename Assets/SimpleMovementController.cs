@@ -126,7 +126,7 @@ public class SimpleMovementController {
 				startTime = Time.time;	
 				attempts = 0;			
 			}
-			else if(Time.time - startTime > 2f){
+			else if(Time.time - startTime > 4f){
 				startTime = Time.time;
 				attempts++;
 				
@@ -135,7 +135,7 @@ public class SimpleMovementController {
 					box.enabled = false;
 				}
 				
-				path = PathFinding.A_Star(start, end);
+				path = SimpleMovement.showHint(start, end, arrows);
 				path.RemoveAt(0);
 				destination = path[0];
 				
@@ -164,6 +164,12 @@ public class SimpleMovementController {
 			   (a.y < (b.y + 2) && a.y > (b.y - 2)))
 				return true;
 			else return false;
+		}
+		
+		public void destroyArrows(){
+			foreach(GameObject obj in arrows)
+				GameObject.Destroy(obj);
+				
 		}
 		
 
