@@ -25,9 +25,9 @@ public class ZoomPanCameraBehavior : MonoBehaviour {
 			float newSize;
 			
 			if(scroll < 0)
-				newSize = Mathf.Max (Camera.main.orthographicSize + sensitivity * scroll, 6);
-			else
 				newSize = Mathf.Min (Camera.main.orthographicSize + sensitivity * scroll, maxCameraSize);
+			else
+				newSize = Mathf.Max (Camera.main.orthographicSize + sensitivity * scroll, 6);
 			
 			Camera.main.orthographicSize = newSize;
 			Camera.main.transform.position = clampToCameraLimits(Camera.main.transform.position);
@@ -38,7 +38,7 @@ public class ZoomPanCameraBehavior : MonoBehaviour {
 			Vector3 currentPos = Input.mousePosition;
 			if(lastPos != Vector3.zero) {
 				float scale = Camera.main.orthographicSize / maxCameraSize;
-				Vector3 newPos = Camera.main.transform.position + (scale * (currentPos - lastPos));
+				Vector3 newPos = Camera.main.transform.position + (scale * (lastPos - currentPos));
 				
 				Camera.main.transform.position = clampToCameraLimits(newPos);
 			}
