@@ -15,9 +15,7 @@ public class PathFinding {
 	}
 		
 	public List<Node> A_Star(Node start, Node end) {
-		
-		float btwNodes = 10.0f;
-		
+				
 		Queue<Node> neighbors = new Queue<Node>(); 
 		BHeap<Node> considered = new BHeap<Node>();
 		Dictionary<Node, Node> navigated = new Dictionary<Node, Node>();
@@ -44,7 +42,7 @@ public class PathFinding {
 			while(neighbors.Count != 0) {
 				
 				neighbor = neighbors.Dequeue();
-				float tentativeScore = btwNodes + current.accumulated;
+				float tentativeScore = current.calcScoreIncrease() + current.accumulated;
 				if(tentativeScore >= neighbor.accumulated)
 					continue;
 				

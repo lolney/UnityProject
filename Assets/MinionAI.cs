@@ -6,7 +6,7 @@ public class MinionAI : MonoBehaviour {
 	private SimpleMovementController controller;
 	public GameObject prefab;
 	
-	public float speed = 12.0f;
+	public float speed = 4.0f;
 	public state current;
 	
 	// Use this for initialization
@@ -14,9 +14,7 @@ public class MinionAI : MonoBehaviour {
 		controller = new SimpleMovementController(gameObject, speed, 0);
 		
 		current = state.path;
-		
-		// TODO: Generalize Pathfinding for current grid 
-		
+				
 		Node start = PathFinding.findClosestNode(transform.position);
 		int x;
 		if(transform.position.x > 0)
@@ -24,10 +22,7 @@ public class MinionAI : MonoBehaviour {
 		else x = 1;
 		Node end = PathFinding.findClosestNode(new Vector3(140 * x,
 											WallGeneration.outerOpening + 5));
-											
-		Instantiate(prefab, end.center, Quaternion.identity);
-		Instantiate(prefab, start.center, Quaternion.identity);
-		
+													
 		float t = Time.time;
 		controller.initPath(start, end); 
 		Debug.Log(Time.time - t);
@@ -35,6 +30,7 @@ public class MinionAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		controller.followPath();
+		if(controller.followPath())
+			Destroy(gameObject);
 	}
 }

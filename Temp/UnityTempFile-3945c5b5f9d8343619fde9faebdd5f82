@@ -51,6 +51,7 @@
 'Assets/MazeGeneration.cs'
 'Assets/MinionAI.cs'
 'Assets/PathFinding.cs'
+'Assets/PlayerControls.cs'
 'Assets/SimpleMovement.cs'
 'Assets/SimpleMovementController.cs'
 'Assets/UpdateText.cs'

@@ -104,7 +104,7 @@ public class WallGeneration : MonoBehaviour {
 		for(int i=0; i<sizeX; i++)
 		for(int j=0; j<sizeY; j++) {
 			Vector2 loc = map[i,j].center;
-			int rand = 1;//(int)Random.Range(0, 2);
+			int rand = 1;//(int)Random.Range(0, 3);
 			
 			if(!Physics2D.Raycast(loc, Vector2.up, (blockSize * 1.1f)))
 				if(j != sizeY - 1){

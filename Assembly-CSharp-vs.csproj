@@ -57,6 +57,7 @@
      <Compile Include="Assets\MazeGeneration.cs" />
      <Compile Include="Assets\MinionAI.cs" />
      <Compile Include="Assets\PathFinding.cs" />
+     <Compile Include="Assets\PlayerControls.cs" />
      <Compile Include="Assets\SimpleMovement.cs" />
      <Compile Include="Assets\SimpleMovementController.cs" />
      <Compile Include="Assets\UpdateText.cs" />

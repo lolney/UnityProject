@@ -16,7 +16,7 @@ public class SimpleMovementController {
 		
 		private List<Node> path;
 		private PathFinding pathfind;
-		private Vector2 destination;
+		private Node destination;
 		private float startTime;
 		private Node end = null;
 		
@@ -94,7 +94,7 @@ public class SimpleMovementController {
 			path = pathfind.A_Star(start, end);
 			Debug.Log(path.Count);
 			rigidbody2D.velocity = Vector2.zero;
-			destination = path[0].center;
+			destination = path[0];
 			startTime = Time.time;
 		}
 		
@@ -114,12 +114,12 @@ public class SimpleMovementController {
 			colBelow = false;
 			anim.enabled = true;
 			
-			if(EqualsWithFudge(destination, current)) {
+			if(EqualsWithFudge(destination.center, current)) {
 				if(path.Count == 0) {
 					box.enabled = true;
 					return true;
 				}
-				destination = path[0].center;			
+				destination = path[0];			
 				path.RemoveAt(0);
 				startTime = Time.time;	
 				attempts = 0;			
@@ -135,7 +135,7 @@ public class SimpleMovementController {
 				
 				path = pathfind.A_Star(start, end);
 				path.RemoveAt(0);
-				destination = path[0].center;
+				destination = path[0];
 				
 				Debug.Log("Rerouting to: " + path[0].center);
 			}
@@ -143,9 +143,9 @@ public class SimpleMovementController {
 			//Debug.Log("Destination: " + destination);
 			//Debug.Log("Current: " + current);
 			
-			rigidbody2D.velocity = destination - current;
+			rigidbody2D.velocity = destination.center - current;
 			rigidbody2D.velocity.Normalize();
-			rigidbody2D.velocity *= Speed;
+			rigidbody2D.velocity *= Speed / destination.slowModifier;
 			
 			float dot = Vector2.Dot(rigidbody2D.velocity, Vector2.right);
 			if((facingRight &&  dot > 0) || (!facingRight && dot < 0))

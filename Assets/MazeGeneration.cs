@@ -261,6 +261,8 @@ public class Node : System.IComparable<Node> {
 	public float score = Mathf.Infinity;
 	public float accumulated = Mathf.Infinity;
 	
+	public float slowModifier = 1;
+	
 	public Node(Vector2 center, bool start = false, bool end = false) {
 		this.center = center;
 		this.start = start;
@@ -291,6 +293,10 @@ public class Node : System.IComparable<Node> {
 		
 		Debug.Log("No cages found. Searched nodes: " + count);
 		return null;
+	}
+	
+	public float calcScoreIncrease(){
+		return (float)LevelProperties.resolution;
 	}
 	
 	public Queue<Node> findNeigbors(bool markExplored = false) {
@@ -384,6 +390,10 @@ public class Node8D : Node {
 	
 	public Node8D(Vector2 center, bool start = false, bool end = false) : base(center, start, end) {}
 	
+	public float calcScoreIncrease() {
+		return base.calcScoreIncrease() * base.slowModifier;
+	}
+	
 	public Queue<Node> findNeigbors(bool markExplored = false) {
 		Queue<Node> result = base.findNeigbors(markExplored);
 		
@@ -418,6 +428,48 @@ public class Node8D : Node {
 		return result;
 	}
 	
+	public void findNeigbors(Queue<Node> result, bool markExplored = false) {
+		base.findNeigbors(result, markExplored);
+		
+		if(markExplored){
+			if(up_right != null && !up_right.explored){
+				result.Enqueue(up_right);
+				up_right.explored = true;
+			}
+			if(down_right != null && !down_right.explored){
+				result.Enqueue(down_right);
+				down_right.explored = true;
+			}
+			if(up_left != null && !up_left.explored){
+				result.Enqueue(up_left);
+				up_left.explored = true;
+			}
+			if(down_left != null && !down_left.explored){
+				result.Enqueue(down_left);
+				down_left.explored = true;
+			}
+		} else {
+			if(up_right != null)
+				result.Enqueue(up_right);
+			if(down_right != null)
+				result.Enqueue(down_right);
+			if(up_left != null)
+				result.Enqueue(up_left);
+			if(down_left != null)
+				result.Enqueue(down_left);
+		}
+		
+	}
+	
+}
+
+public static class ArrayExtension{
+
+	public static void resetExploration(this Node[,] n){
+		for(int i=0; i<n.GetLength(0); i++)
+		for(int j=0; j<n.GetLength(1); j++)
+			n[i,j].explored = false;
+	}
 }
 
 public class AdjacencyObject : System.IComparable<AdjacencyObject> {
