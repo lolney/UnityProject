@@ -52,6 +52,7 @@ public class PlayerControls : MonoBehaviour {
 			tex.SetPixel(i,j,c);
 		}
 		tex.Apply();
+		tex.filterMode = FilterMode.Point;
 		/*
 		SpriteRenderer shader = GameObject.Find("Background").GetComponent<SpriteRenderer>();
 		Sprite sprite = Sprite.Create(tex, new Rect(-LevelProperties.sizeX, LevelProperties.sizeY,
