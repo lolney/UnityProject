@@ -123,6 +123,9 @@ public class SimpleMovementController {
 				}
 				destination = path[0];			
 				path.RemoveAt(0);
+				// Destroy the arrows showing the path as we proceed
+				GameObject.Destroy(arrows[0]);
+				arrows.RemoveAt(0);
 				startTime = Time.time;	
 				attempts = 0;			
 			}

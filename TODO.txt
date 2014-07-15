@@ -9,7 +9,6 @@ Unity goals:
 
 _ Music box effects
 	- Circle object with custom shader
-	- Shader that map as argument?
 
 - AI box placement
 	- Genetic algorithm for deciding box placement
@@ -18,3 +17,8 @@ _ traffic models
 	- Proper Collision handing
 	- Rerouting out of high traffic areas
 	- Traffic AI ? (i.e., reactions to others)
+		- If a another minion is ahead, stop until that minion reaches a suitable distance
+	- How to factor bottlenecks into cost analysis?
+		- Save paths; as minions travel along path, calculate observed cost by 			adding time wasted * velocity to total cost
+			- Doesn’t account for size of moose
+			- Adapts slowly
