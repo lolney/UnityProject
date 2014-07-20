@@ -13,6 +13,8 @@ _ Music box effects
 - AI box placement
 	- Genetic algorithm for deciding box placement
 
+- More efficient pathfinding; Dijkstra's algorithm or other method that keeps around path costs: http://www.redblobgames.com/
+
 _ traffic models
 	- Proper Collision handing
 	- Rerouting out of high traffic areas
@@ -22,3 +24,5 @@ _ traffic models
 		- Save paths; as minions travel along path, calculate observed cost by 			adding time wasted * velocity to total cost
 			- Doesn’t account for size of moose
 			- Adapts slowly
+			- Depends on static scene
+		- Do the above, but add to edge costs along the path instead of maintaining separate edge data structure

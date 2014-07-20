@@ -1,19 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Temp/GeneratedFromSurface-Music box ground effects.shader">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SimpleMovementController.cs">
     <Files>
-      <File FileName="Assets/CharacterGeneration.cs" Line="18" Column="42" />
-      <File FileName="Assets/WallGeneration.cs" Line="1" Column="1" />
-      <File FileName="Assets/MinionAI.cs" Line="1" Column="1" />
-      <File FileName="Assets/ZoomPanCameraBehavior.cs" Line="1" Column="1" />
-      <File FileName="Assets/PathFinding.cs" Line="1" Column="1" />
-      <File FileName="Assets/MazeGeneration.cs" Line="1" Column="1" />
-      <File FileName="Assets/PlayerControls.cs" Line="1" Column="1" />
-      <File FileName="Assets/LevelProperties.cs" Line="1" Column="1" />
-      <File FileName="Assets/SimpleMovementController.cs" Line="1" Column="1" />
-      <File FileName="Assets/SimpleMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Player.cs" Line="3" Column="33" />
-      <File FileName="Temp/GeneratedFromSurface-Music box ground effects.shader" Line="1" Column="1" />
+      <File FileName="Assets/MusicBoxGroundEffects.shader" Line="3" Column="50" />
+      <File FileName="Assets/PlayerControls.cs" Line="55" Column="37" />
+      <File FileName="Assets/SimpleMovementController.cs" Line="128" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
