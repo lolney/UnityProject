@@ -59,6 +59,64 @@ public class PathFinding {
 		return new List<Node>();
 	}
 	
+	/* Need to have separate scores for white eyes, moose */
+	public static void dijkstra(Node end, species myspecies){	// end is the destination node; scores radiate outward from it
+		Node[,] map;
+		LevelProperties.maps.TryGetValue(myspecies, out map);
+		int gridSizeX = LevelProperties.sizeX;
+		int gridSizeY = LevelProperties.sizeY;
+		
+		BHeap<Node> unexplored = new BHeap<Node>();
+		
+		for(int i=0; i< gridSizeX - 1;i++)
+		for(int j=0; j< gridSizeY - 1;j++){
+			if(!map[i,j].Equals(end)){
+				map[i,j].score = Mathf.Infinity;
+				map[i,j].previous = null;	// Previous node in shortest path to destination
+			}
+			else map[i,j].score = 0;
+			unexplored.insert(map[i,j]);
+		}
+		
+		while(!unexplored.isEmpty()){
+			// Choose node in set with least distance from end
+			Node current = unexplored.remove();
+			// Update score of neighbors, if (score of current node) + distance(current node, neighbor) <
+			// current score
+			// Update to neighbor must be reflected in queue (update priority)
+			// For a BHeap, the complexity of this operation is O(n + log(n)) = O(n) : search for Node, move up/down tree
+			// Other priority queue implementations are more efficient (eg, Fibinocci Heap)
+			Queue<Node> neighbors = current.findNeigbors();
+			while(neighbors.Count != 0){
+				Node neighbor = neighbors.Dequeue();
+				float score = current.score + current.distance(neighbor);
+				if(score < neighbor.score) {
+					neighbor.score = score;
+					neighbor.previous = current;
+					unexplored.update(neighbor);
+				}
+			}
+		}
+		
+	}
+	
+	static List<Node> constructPathDijkstra(Vector3 position, species myspecies){
+		Node[,] map;
+		LevelProperties.maps.TryGetValue(myspecies, out map);
+		Node start = findClosestNode(position, map);
+		
+		List<Node> path = new List<Node>();
+		Node current = start;
+		while(current.score != 0){
+			path.Insert(path.Count, current);
+			current = current.previous;
+		}
+		path.Insert(path.Count, current);
+		
+		return path;
+		
+	}
+	
 	static List<Node> constructPath(Dictionary<Node, Node> navigated, Node current) {
 		Node previous;
 		List<Node> path;
@@ -133,10 +191,11 @@ public class PathFinding {
 		return result;
 	}
 	
-	public static Node findClosestNode(Vector3 position) {
+	public static Node findClosestNode(Vector3 position, Node[,] map = null) {
 		
 		Vector3 mazePos = LevelProperties.origin;
-		Node[,] map = LevelProperties.map;
+		if(map == null)
+			map = LevelProperties.map;
 		
 		int s = LevelProperties.resolution;
 		

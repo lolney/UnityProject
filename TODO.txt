@@ -6,6 +6,15 @@ Unity goals:
 	- Smaller radius, but more expensive, obstacles
 
 - Better organization for players (i.e., a player class)
+	- GameBoard
+		- Initialized in init routine
+		- Contains list of players
+		- Player class:
+			- Has own copy of map, other fields (score)
+			- Subclass: Human Player
+			- Code to change: MinionAi
+				- How to link player and MinionAI - assigned to minion on creation?
+			- Scoring: on deletion of minion, get player, increment score of opponent
 
 _ Music box effects
 	- Circle object with custom shader
@@ -26,3 +35,9 @@ _ traffic models
 			- Adapts slowly
 			- Depends on static scene
 		- Do the above, but add to edge costs along the path instead of maintaining separate edge data structure
+
+
+
+Graphics Program
+- Rewriting engine for: efficiency, correcting stutter
+-

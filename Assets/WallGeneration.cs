@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WallGeneration : MonoBehaviour {
 
@@ -162,6 +163,10 @@ public class WallGeneration : MonoBehaviour {
 		}
 		
 		LevelProperties.map = map;
+		LevelProperties.maps = new Dictionary<species, Node[,]>();
+		LevelProperties.maps.Add(species.Moose, (Node[,])map.Clone());
+		LevelProperties.maps.Add(species.WeeWee, (Node[,])map.Clone());
+		
 	}
 	
 	void createArrow(Node current, float rad){

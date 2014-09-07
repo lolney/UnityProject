@@ -16,8 +16,6 @@ public class MazeGeneration : MonoBehaviour {
 	public Node[,] map; 
 	public Vector3 pos;
 	
-	private PathFinding pfinder;
-
 	void  Start (){
 		LevelProperties.resolution = 10;
 		float start = Time.time;
@@ -37,7 +35,6 @@ public class MazeGeneration : MonoBehaviour {
 		
 		LevelProperties.map = map;
 		
-		pfinder = new PathFinding();
 		Debug.Log(Time.time - start);
 	}
 		
@@ -248,6 +245,8 @@ public class MazeGeneration : MonoBehaviour {
 public class Node : System.IComparable<Node> {
 	public Vector2 center;
 	
+	public Node previous; // for forming linked list
+	
 	public Node up = null;
 	public Node down = null;
 	public Node right = null;
@@ -266,7 +265,7 @@ public class Node : System.IComparable<Node> {
 	public Node(Vector2 center, bool start = false, bool end = false) {
 		this.center = center;
 		this.start = start;
-		this.end = end;
+		this.end = end;		
 	}
 	
 	public float calcScoreIncrease() {
@@ -541,6 +540,43 @@ public class BHeap<T> where T : System.IComparable<T>{
 		minHeapify(0);
 		
 		return result;
+	}
+	
+	public bool update(T target){
+		// Search for target node (strict equality)
+		int i = searchStrictEquality(target);
+		
+		if(i < 0) throw new UnityException("Target not found");
+		
+		// Move to correct place in tree
+		upHeapify(i);
+		minHeapify(i);
+		
+		return true;
+	}
+	
+	public int searchStrictEquality(T target){
+		for(int i=0; i<size; i++)
+			if(A[i].Equals(target))
+				return i;
+		return -1;
+	}
+	
+	private int search(T target){
+		return searchRecursive(target, 0);
+	}
+	
+	private int searchRecursive(T target, int i){
+		int cmp = target.CompareTo(A[i]);
+		if(cmp == 0)
+			return i;
+		else if(cmp < 0)
+			return -1;
+		else {
+			int left = (i+1) * 2 - 1;
+			int right = left + 1;
+			return Mathf.Max(searchRecursive(target, left), searchRecursive(target, right));
+		}
 	}
 	
 	public bool contains (T goal) {

@@ -10,6 +10,10 @@ public class LevelProperties : MonoBehaviour {
 	public static int sizeX;
 	public static int sizeY;
 	
+	public static List<Player> players;
+		
 	// List of all characters in scene
 	public static List<GameObject> minions;
+	
+	public static Dictionary<species, Node[,]> maps;
 }

@@ -61,6 +61,7 @@
      <Compile Include="Assets\PlayerControls.cs" />
      <Compile Include="Assets\SimpleMovement.cs" />
      <Compile Include="Assets\SimpleMovementController.cs" />
+     <Compile Include="Assets\TFPlayer.cs" />
      <Compile Include="Assets\UpdateText.cs" />
      <Compile Include="Assets\WallGeneration.cs" />
      <Compile Include="Assets\WeeWeeAI.cs" />
